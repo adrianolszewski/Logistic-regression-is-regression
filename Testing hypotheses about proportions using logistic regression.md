@@ -3,7 +3,7 @@ Despite the widespread and nonsensical claim, that "logistic regression is not a
 Let me show you how the logistic regression (with a few extensions) can be used to test hypotheses about fractions (%) of successes, repacling the classic "test for proportions".
 Namely, it can replicate the results of:
 
-1. the Wald's (normal approximation) **z test for 2 proportions with non-pooled standard errors** (common in clinical trials) via LS-means on the prediction scale or AME (average marginal effect)
+1. [the Wald's (normal approximation) **z test for 2 proportions with non-pooled standard errors**](#wald_2prop_z) (common in clinical trials) via LS-means on the prediction scale or AME (average marginal effect)
 2. the Rao's score (normal appr.) **z test for 2 proportions with pooled standard errors** (just what the `prop.test()` does in R)
 3. the **z test for multiple (2+) proportions**
 4. **ANOVA-like** (joint) test for multiple caterogical predictors (n-way ANOVA). Also (n-way) ANCOVA if you employ numerical covariates.
@@ -80,6 +80,27 @@ We will use 3 data sets (defined at the bottom of this file):
 30 10   T3        1        T3
 ```
 
+* unpaired 2-group ordinal data (Pain score of the ODI (Oswestry Disability Index) questionnaire; 6-items Likert data.
+https://www.lni.wa.gov/forms-publications/F252-130-000.pdf
+``` r
+> head(ordinal_data)
+                 ODIPain Arm Age_centered
+1      [2] Moderate pain   B     -6.15315
+2            [0] No pain   B     12.84685
+3     [1] Very mild pain   A     -9.15315
+4      [2] Moderate pain   B     14.84685
+5 [3] Fairly severe pain   A     12.84685
+6      [2] Moderate pain   B      2.84685
+> tail(ordinal_data)
+                  ODIPain Arm Age_centered
+106    [2] Moderate pain   A   -15.153153
+107    [2] Moderate pain   B   -11.153153
+108    [2] Moderate pain   A    -4.153153
+109 [4] Very severe pain   B    -0.153153
+110   [1] Very mild pain   B    -4.153153
+111   [1] Very mild pain   B    -7.153153
+```
+
 ---
 Loading necessary packages
 ```{r}
@@ -107,6 +128,7 @@ wald_z_test <- function(table) {
 ```
 
 ---
+<a name="wald_2prop_z"></a>
 # Wald's z test for 2 proportions (non-pooled SE)
 
 We want to reproduce this result:
@@ -395,9 +417,211 @@ Let's look closer at the results:
 Reasonable agreement. (Maybe I'll find a better one).
 
 ---
+# Mann-Whitney (-Wilcoxon) test of stochastic equivalence (vs. stochastic superiority / dominancce)
+**Note:** This test DOES NOT TEST MEDIANS in general, unless strong distributional assumptions hold:
+1) IID samples (same dispersion, variance & same shape - if skewed, then in the same direction)
+2) Symmetric around their medians.
+For detailed explanations, read my gist and find a rich list of literature (mostly freely accessible) and examples: https://gist.github.com/adrianolszewski/2cec75678e1183e4703589bfd22fa8b2
+
+We want to reproduce this result:
+``` r
+> (wtest <- wilcox.test(as.numeric(ODIPain) ~ Arm, data = ordinal_data, exact = FALSE, correct = FALSE))
+
+	Wilcoxon rank sum test
+
+data:  as.numeric(ODIPain) by Arm
+W = 1472, p-value = 0.68
+alternative hypothesis: true location shift is not equal to 0
+
+> wtest$p.value
+[1] 0.679575
+```
+By using the proportional-odds model (ordinal logistic regression) we obtain:
+``` r
+> coef(summary(m <- MASS::polr(ODIPain ~ Arm , data = ordinal_data, Hess=T)))
+                                                   Value Std. Error   t value
+ArmB                                            0.141709   0.341471  0.414995
+[0] No pain|[1] Very mild pain                 -1.444439   0.299213 -4.827458
+[1] Very mild pain|[2] Moderate pain           -0.273260   0.259784 -1.051875
+[2] Moderate pain|[3] Fairly severe pain        1.361363   0.291704  4.666935
+[3] Fairly severe pain|[4] Very severe pain     2.093502   0.345203  6.064551
+[4] Very severe pain|[5] Worst imaginable pain  4.072209   0.736078  5.532306
+
+> pairs(emmeans(m, specs = ~Arm))
+ contrast estimate    SE  df z.ratio p.value
+ A - B      -0.142 0.341 Inf  -0.415  0.6781
+
+# or
+> (mtest <- joint_tests(m))
+ model term df1 df2 F.ratio p.value
+ Arm          1 Inf   0.172  0.6781
+
+mtest$p.value
+[1] 0.678146
+```
+
+This time, the two outputs (model vs. test) look very different, but give a very close p-value!
+It's not a coincidence. 
+You can find detailed explanations and necessary formulas here: [Equivalence of Wilcoxon Statistic and Proportional Odds Model](https://www.fharrell.com/post/powilcoxon/) | [Resources for Ordinal Regression Models](https://www.fharrell.com/post/rpo/) | [If You Like the Wilcoxon Test You Must Like the Proportional Odds Model](https://www.fharrell.com/post/wpo/)
+
+So, like Prof. Harrell, we will check also the concordance index:
+``` r
+# From the Wilcoxon statistic
+> (bind_cols(tidy(wilcox.test(as.numeric(ODIPain) ~ Arm, data = ordinal_data, exact = FALSE, correct = FALSE)),
+          ordinal_data %>% 
+            group_by(Arm) %>% 
+            summarize(n=n()) %>% 
+            summarize("n1*n2" = prod(n))) %>% 
+  mutate(c = statistic / `n1*n2`) -> concor)
+
+# A tibble: 1 × 6
+  statistic p.value method                 alternative `n1*n2`     c
+      <dbl>   <dbl> <chr>                  <chr>         <dbl> <dbl>
+1     1472.   0.680 Wilcoxon rank sum test two.sided      3080 0.478
+
+> concor$c
+0.478084
+
+# From the odds ratio taken from the model:
+> (OR <- 1/exp((coef(summary(m)))[1,1]))
+[1] 0.867874
+
+and finally
+> (c_mod <- OR^0.66 / (1 + OR ^ 0.66))
+0.476635
+
+# So we are off by:
+> sprintf("%.2f%%",100*(concor$c - c_mod) / concor$c)
+[1] "0.30%"
+
+# Isn't this IMPRESSIVE?
+```
+
+Let's collect the results closer at the results:
+| Outcome   | OLR | Wilcox | comment |
+|-----------|----------|------------|---------|
+| concordance | 0.478084 | 0.476635 | agreement by 2 dec. digits 👍 |
+| p-value   | 0.679575 | 0.678146 | agreement by 2 dec. digits 👍 |
+
+Very good agreement!
+
+Later, in a separate gist, I will shoud you, through simulation, that this equivalence holds very well!
+
+**Think about the the consequences. This way obtain the Mann-Whitney (-Wilcoxon) test adjusted for covariates.**
+By the way, this is another interesting example, where the result of a completely non-parametric test can be obtained via parametric method.
+
+---
 * _EM-means_ (estimated marginal means) is another name of the well-known in experimental research _LS-means_ (least-square means)
 It's a model-based predicted (estimated) mean. If you remember the definition of regression (NO, not the Machine Learning one...)
 then you know that regresion gives you a some function of the data conditional to the predictor.
 For the linear regression it's E(Y|X=x), for the GLM it is link(E(Y|X=x)), for quantile regression it's median(Y|X=x).
 And since the predictor exclusively consists of categorical variables, they form sub-groups in which the (conditional) 
 means are calculated. If we include also numerical covariates into the model, the predictions will account for it, giving us so-called "covariate-adjusted means".
+
+----
+The datasets for your own experiments:
+
+``` r
+unpaired_data <- structure(list(sex = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L), levels = c("female", "male"), class = "factor"), 
+response = c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), trt = structure(c(1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L
+), levels = c("active", "placebo"), class = "factor")), row.names = c(NA, 
+-106L), class = "data.frame")
+
+paired_data <- structure(list(ID = c(1L, 1L, 2L, 2L, 3L, 3L, 4L, 4L, 5L, 5L, 
+6L, 6L, 7L, 7L, 8L, 8L, 9L, 9L, 10L, 10L, 11L, 11L, 12L, 12L, 
+13L, 13L, 14L, 14L, 15L, 15L, 16L, 16L, 17L, 17L, 18L, 18L, 19L, 
+19L, 20L, 20L), Time = structure(c(2L, 1L, 2L, 1L, 2L, 1L, 2L, 
+1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 
+1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 
+1L), levels = c("Post", "Pre"), class = "factor"), Treatment = structure(c(2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L), levels = c("active", "placebo"), class = "factor"), 
+Response = c(0L, 1L, 0L, 0L, 0L, 0L, 0L, 1L, 0L, 1L, 1L, 
+0L, 0L, 1L, 0L, 0L, 1L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 
+0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 0L, 0L, 0L)), row.names = c(NA, 
+-40L), class = "data.frame")
+
+ordered_paired_data <- structure(list(ID = structure(c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 
+9L, 10L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 1L, 2L, 3L, 
+4L, 5L, 6L, 7L, 8L, 9L, 10L), levels = c("1", "2", "3", "4", 
+"5", "6", "7", "8", "9", "10"), class = "factor"), Time = structure(c(1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L), levels = c("T1", 
+"T2", "T3"), class = c("ordered", "factor")), Response = c(0L, 
+0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 0L, 0L, 
+0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 0L, 1L, 1L), TimeUnord = structure(c(1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L), levels = c("T1", 
+"T2", "T3"), class = "factor")), row.names = c(NA, -30L), class = "data.frame")
+
+ordinal_data <- structure(list(ODIPain = structure(c(3L, 1L, 2L, 3L, 4L, 3L, 
+4L, 2L, 3L, 5L, 2L, 5L, 5L, 6L, 2L, 3L, 1L, 2L, 3L, 3L, 1L, 3L, 
+3L, 2L, 2L, 5L, 5L, 2L, 5L, 3L, 5L, 1L, 3L, 3L, 3L, 1L, 5L, 3L, 
+5L, 1L, 1L, 2L, 1L, 2L, 3L, 2L, 3L, 1L, 2L, 1L, 2L, 4L, 6L, 4L, 
+3L, 3L, 3L, 3L, 1L, 4L, 5L, 4L, 3L, 3L, 1L, 3L, 1L, 4L, 3L, 3L, 
+2L, 3L, 3L, 3L, 3L, 3L, 2L, 2L, 1L, 2L, 2L, 1L, 3L, 4L, 4L, 3L, 
+2L, 2L, 2L, 2L, 2L, 1L, 1L, 3L, 1L, 3L, 1L, 3L, 4L, 4L, 3L, 3L, 
+1L, 2L, 3L, 3L, 3L, 3L, 5L, 2L, 2L), levels = c("[0] No pain", 
+"[1] Very mild pain", "[2] Moderate pain", "[3] Fairly severe pain", 
+"[4] Very severe pain", "[5] Worst imaginable pain"), class = c("ordered", 
+"factor")), Arm = structure(c(2L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 
+2L, 2L, 1L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 1L, 2L, 2L, 1L, 2L, 1L, 
+1L, 2L, 1L, 1L, 2L, 2L, 2L, 1L, 1L, 1L, 2L, 1L, 1L, 2L, 1L, 2L, 
+2L, 2L, 1L, 1L, 2L, 1L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 
+1L, 2L, 2L, 2L, 2L, 1L, 2L, 2L, 1L, 1L, 1L, 2L, 2L, 2L, 1L, 1L, 
+1L, 1L, 1L, 2L, 2L, 2L, 1L, 2L, 2L, 1L, 2L, 1L, 1L, 2L, 1L, 2L, 
+1L, 1L, 2L, 1L, 2L, 1L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 1L, 2L, 2L, 
+1L, 1L, 2L, 1L, 2L, 2L, 2L), levels = c("A", "B"), class = "factor"), 
+Age_centered = c(-6.15315315315316, 12.8468468468468, -9.15315315315316, 
+14.8468468468468, 12.8468468468468, 2.84684684684684, -10.1531531531532, 
+-18.1531531531532, -1.15315315315316, 8.84684684684684, -17.1531531531532, 
+13.8468468468468, 9.84684684684684, 17.8468468468468, -19.1531531531532, 
+-7.15315315315316, -10.1531531531532, -19.1531531531532, 
+-7.15315315315316, 0.846846846846844, -17.1531531531532, 
+5.84684684684684, -25.1531531531532, -1.15315315315316, -15.1531531531532, 
+4.84684684684684, 1.84684684684684, 12.8468468468468, -11.1531531531532, 
+5.84684684684684, -6.15315315315316, -0.153153153153156, 
+20.8468468468468, 5.84684684684684, -0.153153153153156, 12.8468468468468, 
+-19.1531531531532, -11.1531531531532, 1.84684684684684, 0.846846846846844, 
+-21.1531531531532, 9.84684684684684, 15.8468468468468, 14.8468468468468, 
+-12.1531531531532, -11.1531531531532, -9.15315315315316, 
+5.84684684684684, -4.15315315315316, 12.8468468468468, 1.84684684684684, 
+-7.15315315315316, -3.15315315315316, 7.84684684684684, 0.846846846846844, 
+-4.15315315315316, 5.84684684684684, -0.153153153153156, 
+1.84684684684684, -7.15315315315316, 1.84684684684684, -9.15315315315316, 
+6.84684684684684, 9.84684684684684, 17.8468468468468, 5.84684684684684, 
+9.84684684684684, -10.1531531531532, -5.15315315315316, 18.8468468468468, 
+21.8468468468468, -0.153153153153156, 2.84684684684684, -8.15315315315316, 
+-5.15315315315316, 5.84684684684684, 2.84684684684684, -15.1531531531532, 
+2.84684684684684, 25.8468468468468, -11.1531531531532, 27.8468468468468, 
+2.84684684684684, 20.8468468468468, -0.153153153153156, -2.15315315315316, 
+12.8468468468468, -0.153153153153156, 0.846846846846844, 
+11.8468468468468, -8.15315315315316, 3.84684684684684, 22.8468468468468, 
+5.84684684684684, 12.8468468468468, 4.84684684684684, 11.8468468468468, 
+-5.15315315315316, -17.1531531531532, -7.15315315315316, 
+-16.1531531531532, 0.846846846846844, -13.1531531531532, 
+-13.1531531531532, -19.1531531531532, -15.1531531531532, 
+-11.1531531531532, -4.15315315315316, -0.153153153153156, 
+-4.15315315315316, -7.15315315315316)), row.names = c(NA, 
+-111L), class = "data.frame")
+```

@@ -202,8 +202,7 @@ Let's look closer at the results:
 Perfect agreement!
 
 ---
-<a name="#rao_2prop_z"></a>
-
+<a name="rao_2prop_z"></a>
 # Rao score z test for 2 proportions (pooled SE)
 
 We want to reproduce this result:
@@ -250,8 +249,7 @@ Let's look closer at the results:
 Perfect agreement!
 
 ---
-<a name="#breslow-day"></a>
-
+<a name="breslow-day"></a>
 # Breslow-Day test for odds ratios via ANOVA with Rao test
 
 We want to reproduce this result for treatment and sex:
@@ -279,7 +277,7 @@ Let's look closer at the results:
 Good agreement!
 
 ---
-<a name="#cmh"></a>
+<a name="cmh"></a>
 # (Cochrane-) Mantel-Haenszel via conditional logistic regression
 
 We want to reproduce this result for sex strata:
@@ -312,7 +310,7 @@ Let's look closer at the results:
 Ideal agreement!
 
 ---
-<a name="#mcnemar"></a>
+<a name="mcnemar"></a>
 # McNemar's, Cochran Q, Friedman tests via GEE estimated LR
 We want to reproduce this result for sex strata:
 ``` r
@@ -387,7 +385,7 @@ Let's look closer at the results:
 Acceptable agreement!
 
 ---
-<a name="#armitage-trend"></a>
+<a name="armitage-trend"></a>
 # Cochrane-Armitage test for trend via GLM + ANOVA LRT (Likelihood Ratio Test)
 We want to reproduce this result for sex strata:
 ``` r
@@ -424,7 +422,7 @@ Let's look closer at the results:
 Reasonable agreement. (Maybe I'll find a better one).
 
 ---
-<a name="#mww"></a>
+<a name="mww"></a>
 # Mann-Whitney (-Wilcoxon) test of stochastic equivalence (vs. stochastic superiority / dominancce)
 **Note:** This test DOES NOT TEST MEDIANS in general, unless strong distributional assumptions hold:
 1) IID samples (same dispersion, variance & same shape - if skewed, then in the same direction)

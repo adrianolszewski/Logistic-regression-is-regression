@@ -4,15 +4,15 @@ Let me show you how the logistic regression (with a few extensions) can be used 
 Namely, it can replicate the results of:
 
 1. [the Wald's (normal approximation) **z test for 2 proportions with non-pooled standard errors**](#wald_2prop_z) (common in clinical trials) via LS-means on the prediction scale or AME (average marginal effect)
-2. the Rao's score (normal appr.) **z test for 2 proportions with pooled standard errors** (just what the `prop.test()` does in R)
+2. [the Rao's score (normal appr.) **z test for 2 proportions with pooled standard errors**](#rao_2prop_z) (just what the `prop.test()` does in R)
 3. the **z test for multiple (2+) proportions**
 4. **ANOVA-like** (joint) test for multiple caterogical predictors (n-way ANOVA). Also (n-way) ANCOVA if you employ numerical covariates.
-5. the **Cochran-Mantel-Haenszel (CMH) for stratified/matched data** via _conditional logistic regression_
-6. the **Breslow-Day test for odds ratios** through Rao's ANOVA --> the interaction term
-7. the Cochran-Armitage test for trend in ordered proportions
-8. the **McNemar and Cochran Q** test of paired proportions via GEE estimation (Generalized Estimating Equations with compound symmetry)
-9. the **Friedman test** - as above
-10. the **Mann-Whitney-Wilcoxon and Kruskal-Wallis** via Ordinal Logistic Regression (and paired Wilcoxon via GEE)
+5. [the **Cochran-Mantel-Haenszel (CMH) for stratified/matched data**](#cmh) via _conditional logistic regression_
+7. [the **Breslow-Day test for odds ratios**](#breslow-day) through Rao's ANOVA --> the interaction term
+8. [the **Cochran-Armitage test for trend in ordered proportions**](#armitage-trend)
+9. [the **McNemar and Cochran Q** test of paired proportions](#mcnemar) via GEE estimation (Generalized Estimating Equations with compound symmetry)
+10. [the **Friedman test**](#mcnemar) - as above
+11. [the **Mann-Whitney-Wilcoxon and Kruskal-Wallis**](#mww) via Ordinal Logistic Regression (and paired Wilcoxon via GEE)
 
 ---
 
@@ -202,6 +202,7 @@ Let's look closer at the results:
 Perfect agreement!
 
 ---
+<a name="#rao_2prop_z"></a>
 # Rao score z test for 2 proportions (pooled SE)
 
 We want to reproduce this result:
@@ -248,6 +249,7 @@ Let's look closer at the results:
 Perfect agreement!
 
 ---
+<a name="#breslow-day"></a>
 # Breslow-Day test for odds ratios via ANOVA with Rao test
 
 We want to reproduce this result for treatment and sex:
@@ -275,6 +277,7 @@ Let's look closer at the results:
 Good agreement!
 
 ---
+<a name="#cmh"></a>
 # (Cochrane-) Mantel-Haenszel via conditional logistic regression
 
 We want to reproduce this result for sex strata:
@@ -307,6 +310,7 @@ Let's look closer at the results:
 Ideal agreement!
 
 ---
+<a name="#mcnemar"></a>
 # McNemar's, Cochran Q, Friedman tests via GEE estimated LR
 We want to reproduce this result for sex strata:
 ``` r
@@ -381,6 +385,7 @@ Let's look closer at the results:
 Acceptable agreement!
 
 ---
+<a name="#armitage-trend"></a>
 # Cochrane-Armitage test for trend via GLM + ANOVA LRT (Likelihood Ratio Test)
 We want to reproduce this result for sex strata:
 ``` r
@@ -417,6 +422,7 @@ Let's look closer at the results:
 Reasonable agreement. (Maybe I'll find a better one).
 
 ---
+<a name="#mww"></a>
 # Mann-Whitney (-Wilcoxon) test of stochastic equivalence (vs. stochastic superiority / dominancce)
 **Note:** This test DOES NOT TEST MEDIANS in general, unless strong distributional assumptions hold:
 1) IID samples (same dispersion, variance & same shape - if skewed, then in the same direction)

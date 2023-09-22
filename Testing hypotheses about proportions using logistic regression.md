@@ -203,6 +203,7 @@ Perfect agreement!
 
 ---
 <a name="#rao_2prop_z"></a>
+
 # Rao score z test for 2 proportions (pooled SE)
 
 We want to reproduce this result:
@@ -250,6 +251,7 @@ Perfect agreement!
 
 ---
 <a name="#breslow-day"></a>
+
 # Breslow-Day test for odds ratios via ANOVA with Rao test
 
 We want to reproduce this result for treatment and sex:

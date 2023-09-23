@@ -14,6 +14,12 @@ Namely, it can replicate the results of:
 10. [the **Friedman test**](#mcnemar) - as above
 11. [the **Mann-Whitney-Wilcoxon and Kruskal-Wallis**](#mww) via Ordinal Logistic Regression (and paired Wilcoxon via GEE)
 
+Actually, the model-based approach to testing hypotheses is not anything new, and lots of other tests can be replicated with the general linear model via Ordinal Least Square (OLS) and Generalized Least Square (GLS) estimation, generalized linear models (GLM) via both Maximum-Likelhiood estimation (MLE) and semi-parametric Generalized Estimating Equations (GEE). Let's add to this also the conditional approach via Mixed-Effect models (both general and generalized). And let's not forget about the Quantile Regression (with mixed effects), robust regression models, survival models (Cox, AFT, Andersen-Gill, frailty models) and dozens of others!
+
+All those models, followed by the Likelihood Ratio testing (LRT) or Wald's testing of model coefficients, especially combined with LS-means (EM-means) will give you incredibly flexible testing framework.
+
+This time we will look at the Logistic Regression, part of the Generalized Linear Model - the binomial regression with logit link. We will also employ certain extensions i generalizations to achieve concrete effects.
+
 ---
 
 We will use 3 data sets (defined at the bottom of this file):

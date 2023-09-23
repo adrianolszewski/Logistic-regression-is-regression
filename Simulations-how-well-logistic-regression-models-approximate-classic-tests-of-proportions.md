@@ -45,7 +45,26 @@ Ideally add "SAS" to your queries, as commercial packages (SAS, Stata, SPSS, NCS
 Now let's back on the track.
 **By applying Wald's, LR (Likelihood Ratio), or Rao testing procedure to an appropriate model you will be (mostly) able to reproduce the same (or pretty equivalent) hypotheses as the ordinary statistical tests do.**
 
-Now let's check how good is the approximation by doing some simulations. Nothing will give us better feeling of situaion than that.
+## But why? It's SLOW!
+Let's be honest - model-based testing is **MUCH SLOWER** than running a test. Just try. When I performed these simulations, at these sample sizes
+tests completed calculations immediately, while for the model it took 2-3 seconds. Now add to this calculation of the AME, emmeans, some adjustments for degrees of freedom and you'll get about 5 seconds at just few dozens of observations. Now, imagine you run these procedures over a multiply imputed (MICE) dataset.
+For just 20 imputed datasets x 5 seconds it's 100 seconds. In contrast, ordinary testing in this setting will take about 3-5 seconds.
+
+## OK, but try doing THIS with classic tests!
+- ordinary tests won't allow you to control for covariates. Goodbye more advanced experimental research.
+- most classic tests cannot handle more complex designs, like m x n-way testing. Want to test for something in multiple groups rendered by `sex * visit * treatment_arm`? Forget!
+- most classic tests won't be able to test interactions between the factors (modern ones, like ATS (ANOVA-Type Statistic) or WTS (Wald-Type S.) can do, but only in a limited scope.
+- classic tests won't allow you to test specific simple effects via contrasts, e.g.: "Arm: Treatment | Male vs Female at Visit 3" vs. "Arm: Control | Male vs Female at Visit 3". For a model-based testing it's a piece of cake.
+- you may simply NOT KNOW which test to use! Believe me or not, there are 850+ (EIGHT HUNDRED FIFTY!) statistical tests and counting. A colleague of mine is counting them for years. With a model - you don't care about all these "version", just provide the formula, set some parameters and test the hypotheses you need.
+- and you will obtain standard errors and confidence intervals for these comparisons!
+- Want to test some hypotheses jointly? Forget with classic tests!
+
+## Conclusions
+So you can see with your own eyes, that model-based testing has LOTS of advantages. But sometimes you will need just a simple, classic test that runs FAST. Especially, if you have lots of tests to do under multiple imputation conditions, with lengthy data, and you are approaching a deadline :-)
+
+So the choice depends really on your needs.  I only want to show you that this is doable and how well.
+
+Now let's check how good is the approximation by performing some simulations. Nothing will give us better feeling of situaion than that.
 
 ---
 # Methodoloy
@@ -76,15 +95,15 @@ I use: dplyr, tidyr, ggplot2, ggrepel, and patchwork
 ``` r
 plot_differences_between_methods <- function(results, sign_level = 0.05) {
   
-samples <- length(results$iter)
-n_group <- first(results$n_group)
+  properties <- attr(results, "properties")
+  samples <- properties$samples
+  n_group <- properties$n_group
 
 results %>% 
   mutate(diff = Test - Model,
          diff_sign = case_when(diff == 0 ~ "Test = Model", diff > 0 ~ "Test > Model", diff < 0 ~ "Test < Model"),
          ratio = Test / Model,
-         discr = (Test <= sign_level & Model > sign_level) | 
-           (Test > sign_level & Model <= sign_level),
+         discr = (Test <= sign_level & Model > sign_level) | (Test > sign_level & Model <= sign_level),
          discr_descr = ifelse(discr, sprintf("T: %.3f ; M :%.3f", Test, Model), NA)) -> results 
 
 (p_rej_discrep <- results %>%
@@ -99,7 +118,7 @@ results %>%
   scale_y_discrete(labels = c('In agreement','Discrepant')) +
   theme_bw() +
   labs(title = "Discrepancy in rejection: Test vs Model",
-      subtitle =  sprintf("N=%d samples, group size=%d observations; sign. levle=%.3f", samples, n_group, sign_level)) +
+      subtitle =  sprintf("N=%d samples, group size=%d observations; sign. level=%.3f", samples, n_group, sign_level)) +
   ylab("p-value Test - p-value Model")
 )
 
@@ -151,7 +170,9 @@ results %>%
   geom_abline(slope = 1, intercept = 0, col="green") +
   theme_bw() +
   labs(title = "P-values: Test vs Model",
-       subtitle = sprintf("N=%d samples, group size=%d observations", samples, n_group)) +
+       subtitle = sprintf("N=%d samples, group size=%d obs., %s",
+                          samples, n_group, 
+                          ifelse(properties$under_null, "Under H0", "Under H1"))) +
   xlab("Test log(p-values)") +
   ylab("Model log(p-values)")
 )
@@ -165,10 +186,87 @@ results %>%
 ---
 # Simulations
 ## Mann-Whitney vs. Proportional-Odds Model (Ordinal Logistic Regression)
-
+### The data
 For the ordinal logistic regression I made a dataset consisting of patients' responses to question about the intensity of physical pain they feel, part of the ODI (Oswestry Disability Index). Patients are split into two groups: those taking a new investigated medicine vs. those taking active control (existing standard of care).
 So the model is `ODIPain ~ Arm` (arm stands for the treatment arm).
 
 The response was recorded on a 6-level Likert ordinal item (don't confuse with Likert scale, where responses to items are summed together giving a numerical outcome).
 I programmed it so in one group dominate low responses and in the other group - high responses.
+Example:
+```r
+set.seed(1000)
+lapply(1:100, function(i) {
+  stack(
+    data.frame(arm1 = sample(0:5, size=100, replace=TRUE, prob = c(20, 10, 5, 2, 2, 2)),
+               arm2 = sample(0:5, size=100, replace=TRUE, prob = c(2, 2, 2, 5, 10, 20)))) %>% 
+    mutate(values_ord = ordered(values), ind = factor(ind))
+}) -> data
+```
+Although the data size will vary during the simulations, I will visualize only this one case to save space. The stacked bar chart clearly shows that in one group dominate "dark" elements, while in the other group - "bright" ones. The density plots confirm the opposite nature of responses across both arms.
+
+Our comparisons will get more power at increasing sample size, which is an ideal situation as we want to observe both high and low p-values.
+
+``` r
+lapply(1:100, function(i) {
+  print(i)
+  data[[i]] %>% 
+    ggplot() +
+    geom_bar(aes(x=ind, group=values, fill=values), position = "fill", show.legend = FALSE) +
+    theme_void()
+}) -> plots1
+
+lapply(1:100, function(i) {
+  print(i)
+  data[[i]] %>% 
+    ggplot() +
+    geom_density(aes(x=values, group=ind, fill=ind, col=ind), show.legend = FALSE, alpha=0.6, adjust = 1.5)+
+    xlab(NULL) +ylab(NULL) +
+    theme_void()
+}) -> plots2
+
+(patchwork::wrap_plots(plots1, ncol = 10, nrow = 10) |
+    patchwork::wrap_plots(plots2, ncol = 10, nrow = 10)) +
+  patchwork::plot_annotation(title = "Patient-reported ODI pain scores across both treatment arms")
+```
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/a75158cb-c47e-44d8-8e33-acb98c6534a2)
+
+### Comparison
+``` r
+
+simulate_wilcox_olr <- function(samples, n_group, set, arm_1_prob, arm_2_prob) {
+  set.seed(1000)
+  data.frame( 
+    do.call( 
+      rbind, 
+      lapply(1:samples, function(i) {
+        print(i)
+        stack(
+          data.frame(arm1 = sample(set, size=n_group, replace=TRUE, prob = arm_1_prob),
+                     arm2 = sample(set, size=n_group, replace=TRUE, prob = arm_2_prob))) %>% 
+          mutate(values_ord = ordered(values), ind = factor(ind)) -> data
+        
+        c(iter = i,
+          n_group = n_group,
+          Test  = tidy(wilcox.test(values~ind, data=data, exact = FALSE, adjust = FALSE))$p.value,
+          Model = joint_tests(MASS::polr(values_ord ~ ind , data = data, Hess=TRUE))$p.value)
+      }))) -> result
+  
+  attr(result, "properties") <- list(arm_1_prob = arm_1_prob, 
+                                     arm_2_prob = arm_2_prob, 
+                                     under_null = identical(arm_1_prob, arm_2_prob),
+                                     samples = samples,
+                                     n_group = n_group)
+
+  return(result)
+}
+```
+### Results
+#### 20 observations per group
+##### Under H0 - same ordering
+``` r
+simulate_wilcox_olr(samples = 100, n_group = 20, set = 0:5, 
+                    arm_1_prob =  c(20, 10, 5, 2, 2, 2),
+                    arm_2_prob =  c(20, 10, 5, 2, 2, 2)) %>% 
+plot_differences_between_methods()
+```
 

@@ -1,3 +1,4 @@
+# Introduction
 [In this document](https://github.com/adrianolszewski/Logistic-regression-is-regression/blob/main/Testing%20hypotheses%20about%20proportions%20using%20logistic%20regression.md) I showed how the model-based approach, namely
 the logistic regression (with extensions) can replicate numerous classic tests of proportions: 
 Wald's and Rao z test for 2+ proportions (+ ANOVA-like), Cochran-Mantel-Haenszel (CMH), Breslow-Day, Cochran-Armitage, McNemar, Cochran Q, Friedman, Mann-Whitney (-Wilcoxon), Kruskal-Wallis
@@ -47,7 +48,7 @@ Now let's back on the track.
 Now let's check how good is the approximation by doing some simulations. Nothing will give us better feeling of situaion than that.
 
 ---
-**Methodoloy:**
+# Methodoloy
 For each test I set up a loop, in which data were sampled (according to some patterns) and the p-values from both ordinary test and its model counterpart were collected.
 
 Then I displayed these p-values in a series of graphs:
@@ -69,3 +70,105 @@ I repeated the simulations sample sizes:
 Actually, the type-1 error and power is totally off topic in this simjlation, we only check how well the methods follow each other.
 
 ---
+Definition of a helper function for printing the figures.
+I use: dplyr, tidyr, ggplot2, ggrepel, and patchwork
+
+``` r
+plot_differences_between_methods <- function(results, sign_level = 0.05) {
+  
+samples <- length(results$iter)
+n_group <- first(results$n_group)
+
+results %>% 
+  mutate(diff = Test - Model,
+         diff_sign = case_when(diff == 0 ~ "Test = Model", diff > 0 ~ "Test > Model", diff < 0 ~ "Test < Model"),
+         ratio = Test / Model,
+         discr = (Test <= sign_level & Model > sign_level) | 
+           (Test > sign_level & Model <= sign_level),
+         discr_descr = ifelse(discr, sprintf("T: %.3f ; M :%.3f", Test, Model), NA)) -> results 
+
+(p_rej_discrep <- results %>%
+  ggplot(aes(x=iter, y = discr, label=ifelse(discr, discr_descr, NA), col=discr)) +
+  geom_point(show.legend = FALSE) +
+  ggrepel::geom_label_repel(min.segment.length = 0, seed = 100,
+                           box.padding = .4,  segment.linetype = 6,   
+                           direction = "both",
+                           nudge_y = .1,
+                           max.overlaps = 50, size=2.5, show.legend = FALSE) +
+  scale_color_manual(values=c("TRUE"="red2", "FALSE"="green2")) +
+  scale_y_discrete(labels = c('In agreement','Discrepant')) +
+  theme_bw() +
+  labs(title = "Discrepancy in rejection: Test vs Model",
+      subtitle =  sprintf("N=%d samples, group size=%d observations; sign. levle=%.3f", samples, n_group, sign_level)) +
+  ylab("p-value Test - p-value Model")
+)
+
+(p_pval_ratios <- results %>% 
+   ggplot() +
+   geom_point(aes(x=iter, y = ratio)) +
+   geom_hline(yintercept = 1, col="green") +
+   theme_bw() +
+   labs(title = "Ratio of p-values: Test vs Model",
+        subtitle =  sprintf("N=%d samples, group size=%d observations", samples, n_group)) +
+   ylab("p-value Test / p-value Model")
+) 
+
+(p_pval_diffs <- results %>% 
+  ggplot() +
+  geom_point(aes(x=iter, y = diff)) +
+  geom_hline(yintercept = 0, col="green") +
+  theme_bw() +
+  labs(title = "Raw differences in p-values: Test vs Model",
+      subtitle =  sprintf("N=%d samples, group size=%d observations", samples, n_group)) +
+  ylab("p-value Test - p-value Model")
+) 
+
+(p_pval_rel <- results %>% 
+   group_by(diff_sign) %>% 
+   summarize(n=n(),
+             q=list(setNames(quantile(diff), nm=c("Min", "Q1", "Med", "Q3", "Max"))),
+             .groups = "drop_last") %>% 
+   mutate(p=n/sum(n)) %>% 
+   unnest_wider(q) %>% 
+   
+   ggplot() +
+   geom_bar(aes(x = diff_sign, y=p), stat="identity") +
+   scale_y_continuous(labels=scales::percent) +
+   theme_bw() +
+   xlab("Relationship") +
+   labs(title = "Relationship between p-values: Test vs Model",
+        subtitle =  sprintf("N=%d samples, group size=%d observations", samples, n_group)) +
+   geom_label(aes(x = diff_sign, y=.5,
+                  label=sprintf("Min=%.3f\nQ1=%.3f\nMed=%.3f\nQ3=%.3f\nMax=%.3f", Min, Q1, Med, Q3, Max))) +
+   ylab("p-value Test - p-value Model")
+)
+
+(p_pval_vs <- results %>% 
+  ggplot() +
+  geom_point(aes(x=Test, y = Model)) +
+  scale_y_continuous(trans='log10') +
+  scale_x_continuous(trans='log10') +
+  geom_abline(slope = 1, intercept = 0, col="green") +
+  theme_bw() +
+  labs(title = "P-values: Test vs Model",
+       subtitle = sprintf("N=%d samples, group size=%d observations", samples, n_group)) +
+  xlab("Test log(p-values)") +
+  ylab("Model log(p-values)")
+)
+
+((p_rej_discrep + p_pval_ratios +
+  p_pval_diffs + p_pval_rel +
+  patchwork::plot_layout(ncol = 2, nrow = 2)) | p_pval_vs) + 
+  plot_layout(widths = c(2, 1))
+}
+```
+---
+# Simulations
+## Mann-Whitney vs. Proportional-Odds Model (Ordinal Logistic Regression)
+
+For the ordinal logistic regression I made a dataset consisting of patients' responses to question about the intensity of physical pain they feel, part of the ODI (Oswestry Disability Index). Patients are split into two groups: those taking a new investigated medicine vs. those taking active control (existing standard of care).
+So the model is `ODIPain ~ Arm` (arm stands for the treatment arm).
+
+The response was recorded on a 6-level Likert ordinal item (don't confuse with Likert scale, where responses to items are summed together giving a numerical outcome).
+I programmed it so in one group dominate low responses and in the other group - high responses.
+

@@ -1,4 +1,4 @@
-# Introduction
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/35f70dac-488a-4ffa-a29a-3d8a57d257c4)# Introduction
 [In this document](https://github.com/adrianolszewski/Logistic-regression-is-regression/blob/main/Testing%20hypotheses%20about%20proportions%20using%20logistic%20regression.md) I showed how the model-based approach, namely
 the logistic regression (with extensions) can replicate numerous classic tests of proportions: 
 Wald's and Rao z test for 2+ proportions (+ ANOVA-like), Cochran-Mantel-Haenszel (CMH), Breslow-Day, Cochran-Armitage, McNemar, Cochran Q, Friedman, Mann-Whitney (-Wilcoxon), Kruskal-Wallis
@@ -19,8 +19,7 @@ Similarly for the quantile regression yet now you get differences in medians, fi
 
 The situation complicates if you applied transformation of the dependent variable (response) or in case of the Generalized Linear Models (GLM) transforming -in contrast- the E(Y|X=x), 
 like the logistic, ordinal logistic, beta and gamma regressions (+ a few more). First, the interpretation of the "conditional mean" depends
-on the conditional distribution of the data (e.g. for the Bernoulli's distribution in the logistic regression the E(Y|X=x) means is probability of success). Second, it depends on the used link function, where
-- depending on the used transformation - differences may turn into ratios, and (say) probabilities turn into log-odds. No surprise that the interpretation of model coefficients will complicate (a bit). 
+on the conditional distribution of the data (e.g. for the Bernoulli's distribution in the logistic regression the E(Y|X=x) means is probability of success). Second, it depends on the used link function, where - depending on the used transformation - differences may turn into ratios, and (say) probabilities turn into log-odds. No surprise that the interpretation of model coefficients will complicate (a bit). 
 
 And this poses another issue. Let's take the logistic regression. While all these terms: probabilities, odds, log-odds, odds-ratios, testing hypotheses are mutually related through the well-known formulas, performing inference
 on different scales may yield a little bit different results. Well, at the end of the day, you test *different* hypotheses (though related, so the results cannot be wildly discrepant!) and you will operate on different scales.
@@ -46,19 +45,27 @@ Now let's back on the track.
 **By applying Wald's, LR (Likelihood Ratio), or Rao testing procedure to an appropriate model you will be (mostly) able to reproduce the same (or pretty equivalent) hypotheses as the ordinary statistical tests do.**
 
 ## But why? It's SLOW!
-Let's be honest - model-based testing is **MUCH SLOWER** than running a test. Just try. When I performed these simulations, at these sample sizes
-tests completed calculations immediately, while for the model it took 2-3 seconds. Now add to this calculation of the AME, emmeans, some adjustments for degrees of freedom and you'll get about 5 seconds at just few dozens of observations. Now, imagine you run these procedures over a multiply imputed (MICE) dataset.
-For just 20 imputed datasets x 5 seconds it's 100 seconds. In contrast, ordinary testing in this setting will take about 3-5 seconds.
+Let's be honest - model-based testing is **MUCH SLOWER** than running a plain good-old test. Just try. When I performed these simulations, at these sample sizes
+tests completed calculations immediately, while for the model it took 2-3 seconds. Now add to this calculation of the AME, emmeans, some adjustments for degrees of freedom and you'll get about 5-10 seconds at just few dozens of observations. Now, imagine you run these procedures over a multiply imputed (MICE) dataset.
+For just 20 imputed datasets x 5-10 seconds it's **100-200 seconds**. At work, on larger data, with more complex models, not rarely it took **5-10 minutes** to complete. In contrast, ordinary testing in this setting may take **no more than just few seconds**.
 
 ## OK, but try doing THIS with classic tests!
-- ordinary tests won't allow you to control for covariates. Goodbye more advanced experimental research.
-- most classic tests cannot handle more complex designs, like m x n-way testing. Want to test for something in multiple groups rendered by `sex * visit * treatment_arm`? Forget!
-- most classic tests won't be able to test interactions between the factors (modern ones, like ATS (ANOVA-Type Statistic) or WTS (Wald-Type S.) can do, but only in a limited scope.
-- classic tests won't allow you to test specific simple effects via contrasts, e.g.: "Arm: Treatment | Male vs Female at Visit 3" vs. "Arm: Control | Male vs Female at Visit 3". For a model-based testing it's a piece of cake.
-- you may simply NOT KNOW which test to use! Believe me or not, there are 850+ (EIGHT HUNDRED FIFTY!) statistical tests and counting. A colleague of mine is counting them for years. With a model - you don't care about all these "version", just provide the formula, set some parameters and test the hypotheses you need.
+Classic tests are "simple" (often - yes), FAST and... did I say simple?
+Simple test = simple scenarios.
+
+A more advanced inferential analysis often goes FAR beyond that these tests can do.
+
+- ordinary tests won't allow you to control for covariates. Goodbye more advanced analyses.
+- most classic tests cannot handle more complex m x n-way designs. Want to test some outcome across multiple groups rendered by `sex * visit * treatment_arm`? Forget! You will likely need to run multiple simple tests and they won't be able to detect inter-variable relationships. 
+- most of the classic tests won't be able to test interactions between multiple factors (a few modern ones, like ATS (ANOVA-Type Statistic) or WTS (Wald-Type Statistic) can do this, but only in a limited scope (1-level interaction between just 2 factors).
+- classic tests won't allow you to test simple effects via contrasts, e.g.: "Visit: 3, Arm: Treatment | Male vs Female effect" vs. "Visit 3, Arm: Control | Male vs Female effect". **For the model-based testing it's a piece of cake**.
+- you may simply NOT KNOW which test to use! Believe me or not, there are 850+ (EIGHT HUNDRED FIFTY!) statistical tests and counting. A colleague of mine has been counting them for years (with my little support). With a model - you don't care about all these "version", just provide the formula, set some parameters and test the hypotheses you need. Need a trest for trend? Just user ordinal factor for your time variable.
 - and you will obtain standard errors and confidence intervals for these comparisons!
 - Want to test some hypotheses jointly? Forget with classic tests!
+- Want to effectively adjust for multiple testing using parametric exact method employing the estimated effects and covariaces through the multivariate t distribution ("MVT")? This is far better than Bonferroni :-) But forget with simple tests!
 
+Fair enough?
+  
 ## Conclusions
 So you can see with your own eyes, that model-based testing has LOTS of advantages. But sometimes you will need just a simple, classic test that runs FAST. Especially, if you have lots of tests to do under multiple imputation conditions, with lengthy data, and you are approaching a deadline :-)
 
@@ -81,10 +88,11 @@ So this approach gives me some feelings about the situation
 5. How many times both methods disagreed on the rejection of the null hypothesis and what were the actual p-values.
 
 I repeated the simulations sample sizes:
-- n_group = 20 (typical small data size; smaller samples don't make much sense in a reliable research),
-- n_group = 50 (small-data but in a safer area)
-- n_group = 100 (typical situation in clinical trials, where I work)
-- n_group = 200 (above that, even small discrepancies between groups will be reported as statisticall significant, so testing at this data size is dangerous, especially without the practical significance defined!).
+- n_group = 20 - typical small data size; smaller samples don't make much sense in a reliable research,
+- n_group = 30 - the "magical number" so many statisticians find "magical". Of course it's not, but this constitutes a reasonable "lower limit of data"
+- n_group = 50 - still small data but in a safer area
+- n_group = 100 - typical situation in clinical trials, where I work
+- n_group = 200 - above that, even small discrepancies between groups will be reported as statisticall significant, so testing at this data size is dangerous, especially without the practical significance defined!).
 
 Actually, the type-1 error and power is totally off topic in this simjlation, we only check how well the methods follow each other.
 
@@ -93,7 +101,7 @@ Definition of a helper function for printing the figures.
 I use: dplyr, tidyr, ggplot2, ggrepel, and patchwork
 
 ``` r
-plot_differences_between_methods <- function(results, sign_level = 0.05) {
+plot_differences_between_methods <- function(results, sign_level = 0.05, log_axes=FALSE) {
   
   properties <- attr(results, "properties")
   samples <- properties$samples
@@ -158,23 +166,42 @@ results %>%
    labs(title = "Relationship between p-values: Test vs Model",
         subtitle =  sprintf("N=%d samples, group size=%d observations", samples, n_group)) +
    geom_label(aes(x = diff_sign, y=.5,
-                  label=sprintf("Min=%.3f\nQ1=%.3f\nMed=%.3f\nQ3=%.3f\nMax=%.3f", Min, Q1, Med, Q3, Max))) +
-   ylab("p-value Test - p-value Model")
+                  label=sprintf("Quartiles of differences\nMin=%.3f\nQ1=%.3f\nMed=%.3f\nQ3=%.3f\nMax=%.3f", Min, Q1, Med, Q3, Max)),
+              size=3.5) +
+   ylab(NULL)
 )
 
 (p_pval_vs <- results %>% 
   ggplot() +
   geom_point(aes(x=Test, y = Model)) +
-  scale_y_continuous(trans='log10') +
-  scale_x_continuous(trans='log10') +
+    
   geom_abline(slope = 1, intercept = 0, col="green") +
+
+  { if(properties$under_null)
+       list(geom_hline(yintercept = sign_level, linetype="dashed", color="red"),
+            geom_vline(xintercept = sign_level, linetype="dashed", color="red"),
+            geom_label(aes(x=0.75, y=0.25, 
+                           label = sprintf("Rejections of H0 at α=%.3f\nModel: %d\nTest: %d",
+                                           sign_level,
+                                           sum(Model <= sign_level),
+                                           sum(Test <= sign_level)))))
+  } +
+  
+  { if(log_axes)
+      list(scale_y_continuous(trans='log10'),
+           scale_x_continuous(trans='log10'),
+           xlab("Test log(p-values)"),
+           ylab("Model log(p-values)"))
+    else
+      list(xlab("Test p-values"),
+           ylab("Model p-values"))
+  } +
+    
   theme_bw() +
   labs(title = "P-values: Test vs Model",
        subtitle = sprintf("N=%d samples, group size=%d obs., %s",
                           samples, n_group, 
-                          ifelse(properties$under_null, "Under H0", "Under H1"))) +
-  xlab("Test log(p-values)") +
-  ylab("Model log(p-values)")
+                          ifelse(properties$under_null, "Under H0", "Under H1")))
 )
 
 ((p_rej_discrep + p_pval_ratios +
@@ -262,11 +289,37 @@ simulate_wilcox_olr <- function(samples, n_group, set, arm_1_prob, arm_2_prob) {
 ```
 ### Results
 #### 20 observations per group
-##### Under H0 - same ordering
+##### Under H0 - same probabilities of obtating each score across both groups = same ordering of observations
 ``` r
 simulate_wilcox_olr(samples = 100, n_group = 20, set = 0:5, 
                     arm_1_prob =  c(20, 10, 5, 2, 2, 2),
-                    arm_2_prob =  c(20, 10, 5, 2, 2, 2)) %>% 
+                    arm_2_prob =  c(20, 10, 5, 2, 2, 2)) %>%  
 plot_differences_between_methods()
 ```
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/9cb896a2-4ad7-49e8-a35e-9956a2b5b572)
+
+OK, let's make some notes:
+1. look at the most right plot. The p-values from both methods are well aligned to the line of slope = 1, though some bias is visible towards Test p-values.
+2. It means, that test was more conservative than model.
+3. The fact, that practically all p-values coming a test were larger from the p-values obtained from the model is confirmed also by the bar plot (central-bottom).
+4. When we look at the area below the 0.05 significance level, we notice 9 obervations. Remembering we "work under the null" it means, that both methods exceeded the 5% significance level, reaching 9% in this simulation. At this sample size it's not bad for exploratory purposes.
+5. What's nice, the tests did not contradict each other. 
+
+##### Under H1 - in one group the probabilities of obtating each score are reversed (as in the figure explaining the data above)
+``` r
+simulate_wilcox_olr(samples = 100, n_group = 20, set = 0:5, 
+                    arm_1_prob =  rev(c(20, 10, 5, 2, 2, 2)),
+                    arm_2_prob =  c(20, 10, 5, 2, 2, 2)) %>%  
+plot_differences_between_methods()
+```
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/9488e056-373a-44b4-a14e-03dc7164e439)
+
+Well well weel! Let's make some notes:
+1. Now we went to small and very small p-values, so I log-transformed both axes.
+1. There was a clear relationship between the methods, but it's far from a perfect agreement!
+2. This time model was giving noticeably larger p-values
+3. The fact, that practically all p-values coming a test were larger from the p-values obtained from the model is confirmed also by the bar plot (central-bottom).
+4. When we look at the area below the 0.05 significance level, we notice 9 obervations. Remembering we "work under the null" it means, that both methods exceeded the 5% significance level, reaching 9% in this simulation. At this sample size it's not bad for exploratory purposes.
+5. What's nice, the tests did not contradict each other. 
+
 

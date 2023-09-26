@@ -429,7 +429,7 @@ Reasonable agreement. (Maybe I'll find a better one).
 
 ---
 <a name="mww"></a>
-# Mann-Whitney (-Wilcoxon) test of stochastic equivalence (vs. stochastic superiority / dominancce)
+# Mann-Whitney (-Wilcoxon) test of stochastic equivalence (vs. stochastic superiority / dominance)
 **Note:** This test DOES NOT TEST MEDIANS in general, unless strong distributional assumptions hold:
 1) IID samples (same dispersion, variance & same shape - if skewed, then in the same direction)
 2) Symmetric around their medians.

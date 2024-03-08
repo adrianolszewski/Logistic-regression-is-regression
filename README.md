@@ -18,10 +18,8 @@ do I do every day at work?*😉\" he replied \"*I have no idea, but this
 sounds a pure nonsense, because logistic regression predicts only two
 binary outcomes so you understand it cannot be a regression*\" 🤦
 
-<p align="center">
 ![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/d10d14a0-6972-405a-85d9-f0704613b65c)
 In such moments I wish there existed a triple facepalm too\...
-</p>
 
 Earlier, people (mostly researchers, statisticians) already were
 reporting that a similar situation happened to them during interviews

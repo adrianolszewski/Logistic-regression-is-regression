@@ -63,7 +63,7 @@ the whole time of my professional work.
 
 The origins of the logistic function can be traced back to the 19th
 century ([[free
-PDF]{.underline}](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=360300)),
+PDF]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=360300)),
 where it was employed in a \"*model of population growth*\". Early
 attempts (1930s) to model binary data in the regression manner resulted
 in ***probit regression*** model, which constituted a standard for the
@@ -76,11 +76,11 @@ by many as *inferior to the probit model*. It took long years, until the
 logit model gained similar \"trust\" (1960-1970), finally refined by
 **Sir David Cox** (\"Some procedures connected with the logistic
 qualitative response curve\", 1966 and \"[*[The regression analysis of
-binary sequences]{.underline}*](https://www.jstor.org/stable/2983890)\",
+binary sequences]*](https://www.jstor.org/stable/2983890)\",
 1968).
 
 / BTW, check also other titles of this Great Mind of Statistics!
-[[https://www.nuff.ox.ac.uk/Users/Cox/Publications.html]{.underline}](https://www.nuff.ox.ac.uk/Users/Cox/Publications.html)
+[[https://www.nuff.ox.ac.uk/Users/Cox/Publications.html]](https://www.nuff.ox.ac.uk/Users/Cox/Publications.html)
 /
 
 Almost in parallel with the *multinomial logit model* (Cox, Theil),
@@ -106,7 +106,7 @@ default approach.
 
 1970s were truly fruitful to logistic regression! In 1972, **Sir John
 Nelder** and **Robert Weddeburn** in their seminal work ([[free
-PDF]{.underline}](http://www.medicine.mcgill.ca/epidemiology/hanley/bios601/Likelihood/NelderWedderburn1972.pdf))
+PDF]](http://www.medicine.mcgill.ca/epidemiology/hanley/bios601/Likelihood/NelderWedderburn1972.pdf))
 introduced the idea of a unified framework: the ***Generalized Linear
 Model (GLM)***, enabling regression models to cope with response
 variables of any type (counts, categories, continuous), relaxing also
@@ -123,7 +123,7 @@ Hastie** and **Robert Tibshirani** extended the Generalized Linear Model
 (logistic regression is a special case of it) to the **Generalized
 Additive Model**. In their articles (e.g. \"Generalized Additive Models
 for Medical Research\",
-[[https://doi.org/10.1177/096228029500400]{.underline}](https://doi.org/10.1177/096228029500400)
+[[https://doi.org/10.1177/096228029500400]](https://doi.org/10.1177/096228029500400)
 ) they mention the role of logistic regression in identification and
 adjustment for prognostic factors in clinical trials and observational
 studies.
@@ -384,7 +384,7 @@ there is NO difference from any other regression!
 -   **Extending the above tests** for multiple variables and their
     interactions, and numerical covariates. Just check the illustration
     below and then [[visit my GitHub for several
-    examples]{.underline}](https://github.com/adrianolszewski/Logistic-regression-is-regression/blob/main/Testing%20hypotheses%20about%20proportions%20using%20logistic%20regression.md):
+    examples]](https://github.com/adrianolszewski/Logistic-regression-is-regression/blob/main/Testing%20hypotheses%20about%20proportions%20using%20logistic%20regression.md):
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/8b0bc028-7a77-44a2-ac78-c5fb4e1127a0"/>
@@ -393,7 +393,7 @@ there is NO difference from any other regression!
 
 -   Bonus: the model-based approach ([[check my GitHub for some thoughts
     and
-    notes]{.underline}](https://github.com/adrianolszewski/model-based-testing-hypotheses/blob/main/README.md))
+    notes]](https://github.com/adrianolszewski/model-based-testing-hypotheses/blob/main/README.md))
     allows one to employ advanced parametric adjustment for multiple
     comparisons via multivariate t distribution, adjust numerical
     covariates, employ time-varying covariates, account for repeated and
@@ -453,9 +453,9 @@ briefly describe:
     similar to multi-level models, where the error terms may present
     some correlation within the same nest, whereas uncorrelated between
     nests. Thank you, **McFadden**, also for this one! [[Read more
-    here]{.underline}](https://cran.r-project.org/web/packages/nestedLogit/vignettes/nestedLogit.html)
+    here]](https://cran.r-project.org/web/packages/nestedLogit/vignettes/nestedLogit.html)
     and [[here (Applied Microeconometrix with
-    R)]{.underline}](https://discdown.org/microeconometrics/index.html)
+    R)]](https://discdown.org/microeconometrics/index.html)
     (or just \"google\" for more).
 
 -   **Ordinal LR** (aka Proportional Odds Model) - allows you to deal
@@ -470,26 +470,26 @@ briefly describe:
     variables! Yes, you can always do this, the same way you employ
     rank-based methods (e.g. *Conover\'s AN\[C\]OVA*). Read also the
     articles by **Prof. Harrell**, namely: [[Resources for Ordinal
-    Regression Models]{.underline}](https://www.fharrell.com/post/rpo/),
+    Regression Models]](https://www.fharrell.com/post/rpo/),
     [[Equivalence of Wilcoxon Statistic and Proportional Odds
-    Model]{.underline}](https://www.fharrell.com/post/powilcoxon/), [[If
+    Model]](https://www.fharrell.com/post/powilcoxon/), [[If
     You Like the Wilcoxon Test You Must Like the Proportional Odds
-    Model]{.underline}](https://www.fharrell.com/post/wpo/), and more.
+    Model]](https://www.fharrell.com/post/wpo/), and more.
 
 -   **Generalized OLR** - aka Partial Proportional Odds Model is used
     when the proportionality of odds doesn\'t hold. (PS: read
     [[Violation of Proportional Odds is Not
-    Fatal]{.underline}](https://www.fharrell.com/post/po/))
+    Fatal]](https://www.fharrell.com/post/po/))
 
 -   **Logistic Quantile Regression** - application similar to the
     above - performs logistic quantile regression for bounded responses,
     like percentages (0-1), school grades, visual analog scales and so
     on. Check [[this
-    article]{.underline}](https://www.amarun.org/images/amarun/materiales/articulos/Galaraza_11_2020.pdf)
+    article]](https://www.amarun.org/images/amarun/materiales/articulos/Galaraza_11_2020.pdf)
     and manuals for
-    [[Stata]{.underline}](https://journals.sagepub.com/doi/pdf/10.1177/1536867X1101100301)
+    [[Stata]](https://journals.sagepub.com/doi/pdf/10.1177/1536867X1101100301)
     and [[R
-    (lqr)]{.underline}](https://cran.r-project.org/web/packages/lqr/).
+    (lqr)]](https://cran.r-project.org/web/packages/lqr/).
 
 -   **Conditional Logistic Regression - helpful** when we deal with
     stratification and matching groups of data, e.g. in observational
@@ -516,7 +516,7 @@ briefly describe:
     is done by GEE). It handles ordinal responses too. There were some
     past implementations in R, but now they are removed from CRAN. [[SAS
     supports it as part of PROC
-    GEE]{.underline}](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.4/statug/statug_gee_details06.htm).
+    GEE]](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.4/statug/statug_gee_details06.htm).
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/79f802b9-9571-45f2-b69f-fd208ebc0b17"/>

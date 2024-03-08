@@ -49,7 +49,6 @@ thousands saw it) it and will likely repeat the same.
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/5a709edf-bba7-4c0c-bd4e-9669156a4686"/>
 </p>
 
-
 Finally I decided to write a few words about this \"issue\". I write
 from the perspective of a clinical biostatistician, working in clinical
 trials - part of the pharmaceutical industry responsible for both
@@ -143,9 +142,9 @@ born.
 **I can only imagine McFadden\'s and others\' reaction to the nonsense
 \"logistic regression is not a regression\"\...**
 
-![A collage of two people Description automatically
-generated](c:/tmp/xyz/media/image3.png){width="6.5in"
-height="3.6555555555555554in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/073f5592-6707-4c78-82f6-4304204656d1"/>
+</p>
 
 # Conditional expectation - the key to understand the GLM
 
@@ -190,19 +189,17 @@ link**.
 but let\'s agree on its imperfection, as long as it shows the main idea,
 huh? /
 
-![A diagram of graphs and diagrams Description automatically generated
-with medium confidence](c:/tmp/xyz/media/image4.png){width="6.5in"
-height="4.13125in"}
-
-beta regression isn\'t strictly GLM, but is an extension of it
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/a49edd95-5aaf-457d-ae94-d4621dca45a0"/>
+    <p align="center"><em><sup>beta regression isn\'t strictly a GLM, but an extension of it</sup></em></p>
+</p>
 
 BTW: This is well explained in the book I recommend you to read:
 
-![A book cover of a book Description automatically
-generated](c:/tmp/xyz/media/image5.png){width="2.816666666666667in"
-height="4.166666666666667in"}
-
-It\'s about testing assumptions and p-values too :)
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/180dd744-20cc-45bb-bb78-06d48b3ef458"/>
+    <p align="center"><em><sup>Peter H. Westfall, Andrea L. Arias, Understanding Regression Analysis A Conditional Distribution Approach</sup></em></p>
+</p>
 
 Now, let\'s answer a few questions:
 
@@ -238,12 +235,11 @@ taken as granted!) and returns the category:
 
 **IF (p \< 0.5) THEN A ELSE B**
 
-![A diagram of a process Description automatically
-generated](c:/tmp/xyz/media/image6.png){width="6.5in"
-height="2.1597222222222223in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/64479263-ebb4-4cb6-b55f-03ed63b4a296"/>
+</p>
 
-\- *Wait, but this is NOT a regression! This USES the regression
-prediction instead!*
+- *Wait, but this is NOT a regression! This USES the regression prediction instead!*
 
 **Glad you spotted it!**
 
@@ -256,15 +252,15 @@ numerical outcome!*\".**
 
 In other words, they do something like this:
 
-![A diagram of a logistic classifier Description automatically
-generated](c:/tmp/xyz/media/image7.png){width="6.5in"
-height="2.2784722222222222in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/2dcb4fe2-20a6-40e3-9a07-b8e9b9626292"/>
+</p>
 
 \... making a direct jump from binary input to binary output:
 
-![A diagram of a function Description automatically
-generated](c:/tmp/xyz/media/image8.png){width="6.5in"
-height="2.2715277777777776in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/7ed86276-2b81-410d-9cbe-6782c4b427f5"/>
+</p>
 
 But notice, they did NOT CHANGE THE NAME, accordingly. Instead of
 calling it \"Logistic Classifier\", the ML community left the name
@@ -301,22 +297,24 @@ Isn\'t this just crazy?
 Despite numerous regression-related problems, where the logistic
 regression is used every day, the situation looks like below:
 
-![A person holding a sign Description automatically
-generated](c:/tmp/xyz/media/image9.png){width="6.5in"
-height="3.6555555555555554in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/c44cf4a7-23df-4def-8ab8-25f221ca1289"/>
+</p>
 
 So once in a lifetime, let\'s recall what is the difference between
 **logistic regression** and **logistic classifier**:
 
-![A screenshot of a computer Description automatically
-generated](c:/tmp/xyz/media/image10.png){width="6.5in"
-height="2.6069444444444443in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/9a5ba5fd-14a2-43ee-8c2d-ede271571571"/>
+</p>
 
-# Everyone use logistic regression for classification
+# Maybe... But everyone uses logistic regression for classification!
 
 Ah, argumentum ad populum ;\]
 
 OK then:
+
+- First thing: not \"**_everyone_**\*. I understand that ML is a hot topic today (and is here to stay) but it does NOT mean everything revolves around and _nothing else matters_. There are other areas of science and data analysis too. Yeah, really.
 
 -   The fact, that gazillions of people use logistic regression for
     classification purposes doesn\'t remove it\'s regression nature.
@@ -358,11 +356,9 @@ there is NO difference from any other regression!
     probability (via estimated marginal means or marginal effects \--\>
     for non-identity links)
 
-![A graph with numbers and a red dot Description automatically
-generated](c:/tmp/xyz/media/image11.png){width="5.833333333333333in"
-height="4.166666666666667in"}
-
-source:
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/21b4016c-b49f-4414-bd9d-8d3ffa4e9559"/>
+</p>
 
 -   For categorical predictors: **inference about the main effects**
     (=ANOVA), optionally adjusted for numerical covariates (=ANCOVA);
@@ -372,10 +368,9 @@ source:
     interest**, analysed via planned or ad hoc contrasts; optionally
     adjusted for numerical covariates
 
-![A graph showing a number of dots Description automatically generated
-with medium
-confidence](c:/tmp/xyz/media/image12.png){width="5.891666666666667in"
-height="4.166666666666667in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/effa8140-6ab9-4be3-942b-6bbc2c8c5ffd"/>
+</p>
 
 -   For numerical or ordinal categorical predictors: **testing for
     trends** (linear, quadratic, cubic, higher) in proportions.
@@ -391,11 +386,10 @@ height="4.166666666666667in"}
     below and then [[visit my GitHub for several
     examples]{.underline}](https://github.com/adrianolszewski/Logistic-regression-is-regression/blob/main/Testing%20hypotheses%20about%20proportions%20using%20logistic%20regression.md):
 
-![A diagram of a logistic regression Description automatically
-generated](c:/tmp/xyz/media/image13.png){width="6.5in"
-height="2.970138888888889in"}
-
-logistic regression and friends can replicate lots of classic tests!
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/8b0bc028-7a77-44a2-ac78-c5fb4e1127a0"/>
+    <p align="center"><em><sup>logistic regression and friends can replicate lots of classic tests!</sup></em></p>
+</p>
 
 -   Bonus: the model-based approach ([[check my GitHub for some thoughts
     and
@@ -433,9 +427,9 @@ In my field, clinical trials, I use the logistic regression for:
 -   **analysing the over-time within-arm trends of % of successes**,
     e.g. to assess the treatment or some practice persistence.
 
-![A screenshot of a test Description automatically
-generated](c:/tmp/xyz/media/image14.png){width="6.5in"
-height="3.6555555555555554in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/1bc6cc95-deb4-4e2a-9fde-cc0fd6643638"/>
+</p>
 
 # Friends of the logistic regression
 
@@ -524,11 +518,10 @@ briefly describe:
     supports it as part of PROC
     GEE]{.underline}](https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.4/statug/statug_gee_details06.htm).
 
-![A circular object with words in it Description automatically
-generated](c:/tmp/xyz/media/image15.png){width="4.166666666666667in"
-height="4.166666666666667in"}
-
-Logistic regression has many friends
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/79f802b9-9571-45f2-b69f-fd208ebc0b17"/>
+        <p align="center"><em><sup>Logistic regression has many friends</sup></em></p>
+</p>
 
 # Literature
 
@@ -536,15 +529,24 @@ I will populate this chapter with textual references later. For now,
 find the \"collage\" of covers. And believe, neither of these books will
 say that \"logistic regression is not a regression\" :)
 
-![A collection of books with text Description automatically
-generated](c:/tmp/xyz/media/image16.png){width="6.5in"
-height="4.026388888888889in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/c0fb2bf5-089a-4a2f-8a98-fb569c7a3589"/>
+        <p align="center"><em><sup>NEITHER of these great books will give you nonsenses like "...is not a regression"</sup></em></p>
+</p>
 
 \+ recently found an excellent one:
 
-![A red cover with a graph Description automatically
-generated](c:/tmp/xyz/media/image17.png){width="2.75in"
-height="4.166666666666667in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/3d639108-382c-48aa-b383-e798c1afed07"/>
+        <p align="center"><em><sup>Norman Matloff, Statistical Regression and Classification From Linear Models to Machine Learning</sup></em></p>
+</p>
+
+Other authors also prove it can be done properly:
+
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/76b8b6e1-11c7-4299-beb3-5271c52a62b8"/>
+        <p align="center"><em><sup>Brett Lantz, Machine Learning with R: Learn How to Use R to Apply Powerful Machine Learning Methods and Gain and Insight into Real-world Applications</sup></em></p>
+</p>
 
 ## ad hoc comments from my readers
 
@@ -560,11 +562,11 @@ division of biostatistics) applications in the regression manner
 (assessment of the prognostic factors, assessment of the treatment
 effect) and call it a regression model.
 
-![A close-up of a paper Description automatically
-generated](c:/tmp/xyz/media/image18.png){width="6.5in"
-height="3.567361111111111in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/1b6ce8e0-e8b4-4562-89fe-03ba30d04c75"/>
+</p>
 
-Also In the book you mention, on page 121-122 + the following examples
+Also in the book you mention, on page 121-122 + the following examples
 they say: \"*Logistic regression models are used mostly as a data
 analysis and inference tool, where the goal is to understand the role of
 the input variables in explaining the outcome. Typically many models are
@@ -575,10 +577,11 @@ variables, possibly with some interactions terms.*\"
     source?*
 
 *A:*
+Here (just for instance):
 
-![A screenshot of a computer Description automatically
-generated](c:/tmp/xyz/media/image19.png){width="6.5in"
-height="1.9638888888888888in"}
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/a289534b-6b52-45b6-92bf-1e4955185728"/>
+</p>
 
 -   *Q: ChatGPT 3.5 says that logistic regression is not a regression!*
 
@@ -594,8 +597,7 @@ pass your exams or an interview, or do your job.**
 PS: I was told that the newest version of ChatGPT is much better, so
 give it a try.
 
-![A screenshot of a computer Description automatically
-generated](c:/tmp/xyz/media/image20.png){width="6.5in"
-height="5.142361111111111in"}
-
-ChatGPT 3.5 in action
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/84538581-5251-471b-a979-8256cd854f0a"/>
+            <p align="center"><em><sup>ChatGPT 3.5 in action</sup></em></p>
+</p>

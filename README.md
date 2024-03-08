@@ -20,10 +20,8 @@ binary outcomes so you understand it cannot be a regression*\" 🤦
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/d10d14a0-6972-405a-85d9-f0704613b65c"/>
-    <p align="center"><em><sup>In such moments I wish there existed a triple facepalm too...</sup>sup></em></p>
+    <p align="center"><em><sup>In such moments I wish there existed a triple facepalm too...</sup></em></p>
 </p>
-
-
 
 Earlier, people (mostly researchers, statisticians) already were
 reporting that a similar situation happened to them during interviews
@@ -47,7 +45,10 @@ further and\...
 earning hundreds of 👍 proving that hundreds of people liked (so tens of
 thousands saw it) it and will likely repeat the same.
 
-![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/5a709edf-bba7-4c0c-bd4e-9669156a4686)
+<p align="center">
+<img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/5a709edf-bba7-4c0c-bd4e-9669156a4686"/>
+</p>
+
 
 Finally I decided to write a few words about this \"issue\". I write
 from the perspective of a clinical biostatistician, working in clinical

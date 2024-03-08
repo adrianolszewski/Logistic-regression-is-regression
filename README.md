@@ -20,10 +20,10 @@ binary outcomes so you understand it cannot be a regression*\" 🤦
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/d10d14a0-6972-405a-85d9-f0704613b65c">
+<span style="font-size:small; font-style:italic;">In such moments I wish there existed a triple facepalm too\...</span>
 </p>
 
-![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/d10d14a0-6972-405a-85d9-f0704613b65c)
-In such moments I wish there existed a triple facepalm too\...
+
 
 Earlier, people (mostly researchers, statisticians) already were
 reporting that a similar situation happened to them during interviews

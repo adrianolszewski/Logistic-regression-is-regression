@@ -14,7 +14,7 @@ Namely, it can replicate the results of:
 10. [the **Friedman test**](#mcnemar) - as above
 11. [the **Mann-Whitney-Wilcoxon and Kruskal-Wallis**](#mww) via Ordinal Logistic Regression (and paired Wilcoxon via GEE)
 
-Actually, the model-based approach to testing hypotheses is not anything new, and lots of other tests can be replicated with the general linear model via Ordinal Least Square (OLS) and Generalized Least Square (GLS) estimation, generalized linear models (GLM) via both Maximum-Likelhiood estimation (MLE) and semi-parametric Generalized Estimating Equations (GEE). Let's add to this also the conditional approach via Mixed-Effect models (both general and generalized). And let's not forget about the Quantile Regression (with mixed effects), robust regression models, survival models (Cox, AFT, Andersen-Gill, frailty models) and dozens of others!
+Actually, the model-based approach to testing hypotheses is not anything new, and lots of other tests can be replicated with the general linear model via Ordinal Least Square (OLS) and Generalized Least Square (GLS) estimation, generalized linear models (GLM) via both Maximum-Likelihood estimation (MLE) and semi-parametric Generalized Estimating Equations (GEE). Let's add to this also the conditional approach via Mixed-Effect models (both general and generalized). And let's not forget about the Quantile Regression (with mixed effects), robust regression models, survival models (Cox, AFT, Andersen-Gill, frailty models) and dozens of others!
 
 All those models, followed by the Likelihood Ratio testing (LRT) or Wald's testing of model coefficients, especially combined with LS-means (EM-means) will give you incredibly flexible testing framework.
 
@@ -472,7 +472,7 @@ mtest$p.value
 [1] 0.678146
 ```
 
-This time, the two outputs (model vs. test) look very different, but give a very close p-value!
+This time, the two outputs (model vs. test) look very different but give a very close p-value!
 It's not a coincidence. 
 You can find detailed explanations and necessary formulas here: [Equivalence of Wilcoxon Statistic and Proportional Odds Model](https://www.fharrell.com/post/powilcoxon/) | [Resources for Ordinal Regression Models](https://www.fharrell.com/post/rpo/) | [If You Like the Wilcoxon Test You Must Like the Proportional Odds Model](https://www.fharrell.com/post/wpo/)
 
@@ -519,14 +519,14 @@ Very good agreement!
 
 Later, in a separate gist, I will shoud you, through simulation, that this equivalence holds very well!
 
-**Think about the the consequences. This way obtain the Mann-Whitney (-Wilcoxon) test adjusted for covariates.**
+**Think about the consequences. This way obtain the Mann-Whitney (-Wilcoxon) test adjusted for covariates.**
 By the way, this is another interesting example, where the result of a completely non-parametric test can be obtained via parametric method.
 
 ---
 * _EM-means_ (estimated marginal means) is another name of the well-known in experimental research _LS-means_ (least-square means)
 It's a model-based predicted (estimated) mean. If you remember the definition of regression (NO, not the Machine Learning one...)
-then you know that regresion gives you a some function of the data conditional to the predictor.
-For the linear regression it's E(Y|X=x), for the GLM it is link(E(Y|X=x)), for quantile regression it's median(Y|X=x).
+then you know that regresion gives you some function of the data conditional to the predictor.
+For the linear regression it's E(Y|X=x), for the GLM it is link(E(Y|X=x)), for quantile regression it's Qi(Y|X=x).
 And since the predictor exclusively consists of categorical variables, they form sub-groups in which the (conditional) 
 means are calculated. If we include also numerical covariates into the model, the predictions will account for it, giving us so-called "covariate-adjusted means".
 

@@ -18,11 +18,7 @@ do I do every day at work?*😉\" he replied \"*I have no idea, but this
 sounds a pure nonsense, because logistic regression predicts only two
 binary outcomes so you understand it cannot be a regression*\" 🤦
 
-![Two men sitting at a table with their hands on their faces Description
-automatically
-generated](c:/tmp/xyz/media/image1.jpeg){width="5.208333333333333in"
-height="4.166666666666667in"}
-
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/d10d14a0-6972-405a-85d9-f0704613b65c)
 In such moments I wish there existed a triple facepalm too\...
 
 Earlier, people (mostly researchers, statisticians) already were
@@ -47,9 +43,7 @@ further and\...
 earning hundreds of 👍 proving that hundreds of people liked (so tens of
 thousands saw it) it and will likely repeat the same.
 
-![A toy character next to another toy Description automatically
-generated](c:/tmp/xyz/media/image2.jpeg){width="6.5in"
-height="3.602777777777778in"}
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/5a709edf-bba7-4c0c-bd4e-9669156a4686)
 
 Finally I decided to write a few words about this \"issue\". I write
 from the perspective of a clinical biostatistician, working in clinical

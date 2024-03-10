@@ -3,10 +3,7 @@ Despite the popular yet wrong claim that logistic regression "is not a regressio
 
 # Logistic regression has been a regression since its birth
 
-Believe me - it\'s truly embarrassing to write about something that is obvious to
-anyone working with statistics but has been distorted by hundreds of
-thousands of members of the #machinelearning community, so today the lie
-replaced the truth.
+Well, it's kinda... embarrassing for me to write about something that is (should be) obvious to anyone working with statistics but in the last decade has been distorted by hundreds of thousands of members of the #machinelearning community, so today lie replaced the truth... 
 
 I remember the first time, when, during some discussion, I said that
 \"I\'ve been using logistic regression for long years on daily basis for

@@ -1,7 +1,7 @@
 # Logistic-regression-is-regression
 Despite the popular yet wrong claim that logistic regression "is not a regression", it's one of the key regression and hypothesis testing tools in epxerimental research (like clinical trials). I will share information from my field to break the bizzare situation, when people from Machine Learning tell me that "what we do every day cannot be done".
 
-# Logistic regression has been a regression since its birth
+# Logistic regression has been a regression since its birth - and is used this way every day
 
 Well, it's kinda... embarrassing for me to write about something that is (should be) obvious to anyone working with statistics but in the last decade has been distorted by hundreds of thousands of members of the #machinelearning community, so today lie replaced the truth... 
 

@@ -5,15 +5,15 @@ Despite the popular yet wrong claim that logistic regression "is not a regressio
 
 Well, it's kinda... embarrassing for me to write about something that is (should be) obvious to anyone working with statistics but in the last decade has been distorted by hundreds of thousands of members of the #machinelearning community, so today lie replaced the truth... 
 
-I remember the first time, when, during some discussion, I said that
-\"I\'ve been using logistic regression for long years on daily basis for
-regression and testing hypotheses, but I\'ve never used it for
-classification\" and a Data Scientist (with PhD degree) told me, that I
-must have been mistaken, because \"*despite its name logistic regression
-not a regression algorithm*\". I asked him \"*then tell me, please, what
-do I do every day at work?*😉\" he replied \"*I have no idea, but this
-sounds a pure nonsense, because logistic regression predicts only two
-binary outcomes so you understand it cannot be a regression*\" 🤦
+I remember the first time, when, during some discussion, I said that "I've been using logistic regression for long years on daily basis for
+regression and testing hypotheses, but I've never used it for classification" and a Data Scientist (with PhD degree) told me, that I
+must have been mistaken, because "*despite its name logistic regression not a regression algorithm*". I asked him "*then tell me, please, what
+do I do every day at work?*😉" he replied "*I have no idea, but this sounds a pure nonsense, because logistic regression predicts only two
+binary outcomes so you understand it cannot be a regression*" 🤦
+
+I remember the first time, when, during some discussion, I said that "I've been using logistic regression for long years on daily basis for regression and testing hypotheses, but I've never used it for classification" and a Data Scientist (with PhD degree) told me, that I must have been mistaken, because "despite its name logistic regression not a regression algorithm". I asked him "then tell me, please, what do I do every day at work?😉" he replied "I have no idea, but this sounds a pure nonsense, because logistic regression predicts only two binary outcomes so you understand it cannot be a regression" 🤦
+
+
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/d10d14a0-6972-405a-85d9-f0704613b65c"/>
@@ -23,9 +23,9 @@ binary outcomes so you understand it cannot be a regression*\" 🤦
 Earlier, people (mostly researchers, statisticians) already were
 reporting that a similar situation happened to them during interviews
 and internet discussions. I did small research, which results knocked me
-off my feet. I \"googled\" for terms like \"*logistic regression is not
-(a) regression*\", \"*logistic regression is a misnomer*\" or
-\"*logistic regression, despite its name*\". The number of findings was
+off my feet. I "googled" for terms like "*logistic regression is not
+(a) regression*", "*logistic regression is a misnomer*" or
+"*logistic regression, despite its name*". The number of findings was
 huge - they occurred everywhere: in articles (Medium, Quora), tutorials
 (also issued by companies offering paid courses), blogs, courses, books
 (including bestsellers in ML written by people holding PhD), YouTube
@@ -33,8 +33,8 @@ videos. I also repeated the search on LinkedIn and found endless flood
 of posts repeating this nonsense just copy-pasted from other posts.
 
 Not only that! I asked Chat GPT 3 (then 3.5) and got identical results.
-No surprise! It was \"fed\" by garbage, so it learned garbage, and today
-it helps spreading garbage to learners, who usually don\'t even suspect
+No surprise! It was "fed" by garbage, so it learned garbage, and today
+it helps spreading garbage to learners, who usually don't even suspect
 something is wrong, so they trust AI and repeat the nonsense further and
 further and\...
 
@@ -46,14 +46,14 @@ thousands saw it) it and will likely repeat the same.
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/5a709edf-bba7-4c0c-bd4e-9669156a4686"/>
 </p>
 
-Finally I decided to write a few words about this \"issue\". I write
+Finally I decided to write a few words about this "issue". I write
 from the perspective of a clinical biostatistician, working in clinical
 trials - part of the pharmaceutical industry responsible for both
 existing and new therapies (drugs, procedures, devices) evaluation and
 approval. Here the logistic regression is the key regression algorithm,
 used to answer questions about treatment efficacy and safety based on
 the data from clinical trials with binary endpoints (success/failure).
-And yes, that\'s true - I have never used it for classification during
+And yes, that's true - I have never used it for classification during
 the whole time of my professional work.
 
 # Birth of the logistic regression and the\... Nobel Prize
@@ -61,19 +61,19 @@ the whole time of my professional work.
 The origins of the logistic function can be traced back to the 19th
 century ([[free
 PDF]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=360300)),
-where it was employed in a \"*model of population growth*\". Early
+where it was employed in a "*model of population growth*". Early
 attempts (1930s) to model binary data in the regression manner resulted
 in ***probit regression*** model, which constituted a standard for the
 next few decades. Researchers found the outcome not much intuitive, so
 they searched for a regression model, which coefficients would be easier
 to interpret. In already 1944 **Joseph Berkson** started working on the
-alternative to the probit model, and the \"logit\" (by analogy to
-\"probit\") model was born. Unfortunately, the logit model was rejected
+alternative to the probit model, and the "logit" (by analogy to
+"probit") model was born. Unfortunately, the logit model was rejected
 by many as *inferior to the probit model*. It took long years, until the
-logit model gained similar \"trust\" (1960-1970), finally refined by
-**Sir David Cox** (\"Some procedures connected with the logistic
-qualitative response curve\", 1966 and \"[*[The regression analysis of
-binary sequences]*](https://www.jstor.org/stable/2983890)\",
+logit model gained similar "trust" (1960-1970), finally refined by
+**Sir David Cox** ("Some procedures connected with the logistic
+qualitative response curve", 1966 and "[*[The regression analysis of
+binary sequences]*](https://www.jstor.org/stable/2983890)",
 1968).
 
 / BTW, check also other titles of this Great Mind of Statistics!
@@ -83,7 +83,7 @@ binary sequences]*](https://www.jstor.org/stable/2983890)\",
 Almost in parallel with the *multinomial logit model* (Cox, Theil),
 which, finally, in 1973, allowed **Daniel McFadden**, a famous
 econometrician, to piece together existing puzzles, including the
-**Duncan Luce**\'s *choice axiom*, into a whole, which resulted in a
+**Duncan Luce**'s *choice axiom*, into a whole, which resulted in a
 theoretical foundation for the ***logistic regression***. At that time,
 McFadden was deeply involved in pioneering work in developing the
 theoretical basis for *discrete choice* where he applied the logistic
@@ -91,7 +91,7 @@ regression for empirical analysis. His work, making a profound impact on
 the analysis of discrete choice problems in economics and other fields,
 gave him the Nobel Prize in 2000.
 
-I think we can fairly say that Daniel McFadden\'s work on the logistic
+I think we can fairly say that Daniel McFadden's work on the logistic
 (ordinary and multinomial) regression model and the discrete choice
 analysis was truly groundbreaking. It played a significant role in
 establishing logistic regression as a solid tool in statistical
@@ -112,14 +112,14 @@ the assumption of normal distribution of errors.
 / Logistic regression is a special case of the GLM. You can spot it
 easily when working with R statistical package, when you call the glm()
 and specify the family of conditional distribution of the response, here
-\"binomial\" with appropriate link, here \"logit\": glm(family =
-binomial(link = \"logit\")) /
+"binomial" with appropriate link, here "logit": glm(family =
+binomial(link = "logit")) /
 
 Just a decade later, two other big names you know for sure, **Trevor
 Hastie** and **Robert Tibshirani** extended the Generalized Linear Model
 (logistic regression is a special case of it) to the **Generalized
-Additive Model**. In their articles (e.g. \"Generalized Additive Models
-for Medical Research\",
+Additive Model**. In their articles (e.g. "Generalized Additive Models
+for Medical Research",
 [[https://doi.org/10.1177/096228029500400]](https://doi.org/10.1177/096228029500400)
 ) they mention the role of logistic regression in identification and
 adjustment for prognostic factors in clinical trials and observational
@@ -136,8 +136,8 @@ Estimating Equations* (GEE) and **Breslow, Clayton and others** around
 1993, when the theory of *Generalized Linear Mixed Models* (GLMM) was
 born.
 
-**I can only imagine McFadden\'s and others\' reaction to the nonsense
-\"logistic regression is not a regression\"\...**
+**I can only imagine McFadden's and others' reaction to the nonsense
+"logistic regression is not a regression"\...**
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/073f5592-6707-4c78-82f6-4304204656d1"/>
@@ -152,43 +152,43 @@ of the expected value, like in the robust regression. Or - the expected
 value of the conditional response (=*conditional expectation*) itself,
 like in the classic linear regression: **E(Y\|X=x)**.
 
-/ so often confused with one of the estimation algorithms \--\> \"OLS
-regression\" - don\'t repeat that. /
+/ so often confused with one of the estimation algorithms \--\> "OLS
+regression" - don't repeat that. /
 
-Now, it\'s all about the conditional distribution. If it\'s Gaussian
+Now, it's all about the conditional distribution. If it's Gaussian
 (normal distribution), you obtain the linear regression. But the GLM
 allows you to use also other distributions: Bernoulli (or binomial),
 gamma, Poisson, negative binomial, etc. The problem is that then the
 conditional expectations are not linearly related with the predictor,
-which is something we really want. That\'s why we have the **link
+which is something we really want. That's why we have the **link
 function**, linking the conditional expectation and the predictor for a
 given conditional distribution: **g(E(Y\|X=x)) = Xb** (sometimes you
-will see this formula reversed: E(Y\|X=x) = g-1(Xb). It\'s equivalent
+will see this formula reversed: E(Y\|X=x) = g-1(Xb). It's equivalent
 formulation).
 
-Now, the expected values are \"linearized\" with respect to the
-predictor. For the ordinary linear regression you don\'t need that, so
+Now, the expected values are "linearized" with respect to the
+predictor. For the ordinary linear regression you don't need that, so
 the g() is just I() (identity function, which we omit) - the expected
 values lay on a straight line, plane, or hyperplane (depending on how
 many predictors you have).
 
 / The name, *conditional expectation*, is also perfectly visible when
-you do ANOVA. That\'s just 1:1, perfect example: the levels of
-categorical predictor(s) \"form\" sub-distributions, and mean is
-calculated in each. Now you also understand what it means: \"**expected
-value CONDITIONAL to the predictor**\"! /
+you do ANOVA. That's just 1:1, perfect example: the levels of
+categorical predictor(s) "form" sub-distributions, and mean is
+calculated in each. Now you also understand what it means: "**expected
+value CONDITIONAL to the predictor**"! /
 
 Below we can observe various conditional distributions and their means.
 The means lay on a straight line transformed by the g() function, **the
 link**.
 
-/ OK, I know, the illustration isn\'t perfect, simplifications are made,
-but let\'s agree on its imperfection, as long as it shows the main idea,
+/ OK, I know, the illustration isn't perfect, simplifications are made,
+but let's agree on its imperfection, as long as it shows the main idea,
 huh? /
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/a49edd95-5aaf-457d-ae94-d4621dca45a0"/>
-    <p align="center"><em><sup>beta regression isn\'t strictly a GLM, but an extension of it</sup></em></p>
+    <p align="center"><em><sup>beta regression isn't strictly a GLM, but an extension of it</sup></em></p>
 </p>
 
 BTW: This is well explained in the book I recommend you to read:
@@ -198,25 +198,25 @@ BTW: This is well explained in the book I recommend you to read:
     <p align="center"><em><sup>Peter H. Westfall, Andrea L. Arias, Understanding Regression Analysis A Conditional Distribution Approach</sup></em></p>
 </p>
 
-Now, let\'s answer a few questions:
+Now, let's answer a few questions:
 
-1.  **Is expected value numerical or categorical?** Of course it\'s
-    numerical. It\'s just \"average\". So you instantly see that
+1.  **Is expected value numerical or categorical?** Of course it's
+    numerical. It's just "average". So you instantly see that
     logistic regression CANNOT predict categorical (binary) outcome
-    itself. Whatever you\'ve been told - it cannot, and it does not.
+    itself. Whatever you've been told - it cannot, and it does not.
     Period.
 
 2.  **What kind of conditional distribution does the logistic regression
-    use?** It uses the Bernoulli\'s distribution of a single-trial
+    use?** It uses the Bernoulli's distribution of a single-trial
     random variable, taking value 1 (for success) with probability p and
     the value 0 (for failure) with probability 1−p.
 
-3.  **What is the expected value for the Bernoulli\'s distribution?**
-    It\'s \"p\" - the probability of success.
+3.  **What is the expected value for the Bernoulli's distribution?**
+    It's "p" - the probability of success.
 
 4.  **So the E(Y\|X=x) is numerical?** Yes, probabilities are numerical.
 
-5.  **Why \"Bernoulli\" if statistical manuals say \"binomial\"?**
+5.  **Why "Bernoulli" if statistical manuals say "binomial"?**
     Bernoulli is binomial with k=1. Just a general term.
 
 **I hope you can see from this, that logistic regression, as any other
@@ -225,9 +225,9 @@ regression, predicts a numerical outcome, NOT categorical.**
 # How is logistic regression turned into a classifier?
 
 The outcome from the logistic regression, the conditional probability
-(therefore logistic regression is called also a \"*direct probability
-estimator*\") subjected to a conditional rule IF-THEN-ELSE , which
-compares it against some threshold (usually 0.5, but this shouldn\'t be
+(therefore logistic regression is called also a "*direct probability
+estimator*") subjected to a conditional rule IF-THEN-ELSE , which
+compares it against some threshold (usually 0.5, but this shouldn't be
 taken as granted!) and returns the category:
 
 **IF (p \< 0.5) THEN A ELSE B**
@@ -240,12 +240,12 @@ taken as granted!) and returns the category:
 
 **Glad you spotted it!**
 
-Too often people do not and just repeat that \"logistic regression
-predicts binary outcome\". And when I tell them \"*but what about the
+Too often people do not and just repeat that "logistic regression
+predicts binary outcome". And when I tell them "*but what about the
 regression term in it, which means that it should predict a numerical
-value?*\", they respond \"***Oh! It\'s a misnomer! Despite its name,
-logistic regression isn\'t a regression because it it doesn\'t predict
-numerical outcome!*\".**
+value?*", they respond "***Oh! It's a misnomer! Despite its name,
+logistic regression isn't a regression because it it doesn't predict
+numerical outcome!*".**
 
 In other words, they do something like this:
 
@@ -260,21 +260,21 @@ In other words, they do something like this:
 </p>
 
 But notice, they did NOT CHANGE THE NAME, accordingly. Instead of
-calling it \"Logistic Classifier\", the ML community left the name
-\"Logistic Regression\". We could say they \"appropriated the logistic
-regression\".
+calling it "Logistic Classifier", the ML community left the name
+"Logistic Regression". We could say they "appropriated the logistic
+regression".
 
 Consequently, **they have problems with justifying the existing name**,
 so they try:
 
 -   „*Oh! This name is a „misnomer*"
 
--   „*It\'s called regression because the equation has similar form to
+-   „*It's called regression because the equation has similar form to
     linear regression*"
 
--   \"*It must be said that, despite its name, it\'s not a regression*"
+-   "*It must be said that, despite its name, it's not a regression*"
 
-Isn\'t this just crazy?
+Isn't this just crazy?
 
 1.  Statisticians invent a regression algorithm (that is, to solve
     regression problems) and use this way for more than half a century
@@ -284,12 +284,12 @@ Isn\'t this just crazy?
 3.  ML specialists treat it as a classifier
 
 4.  ML specialists do NOT assign appropriate name to the classifier,
-    leaving the \"regression\" in it
+    leaving the "regression" in it
 
 5.  ML specialists deny that logistic regression is a regression
 
-6.  ML specialists correct statisticians that \"LR is a misnomer and
-    despite its name LR is not a regression\"
+6.  ML specialists correct statisticians that "LR is a misnomer and
+    despite its name LR is not a regression"
 
 Despite numerous regression-related problems, where the logistic
 regression is used every day, the situation looks like below:
@@ -298,7 +298,7 @@ regression is used every day, the situation looks like below:
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/c44cf4a7-23df-4def-8ab8-25f221ca1289"/>
 </p>
 
-So once in a lifetime, let\'s recall what is the difference between
+So once in a lifetime, let's recall what is the difference between
 **logistic regression** and **logistic classifier**:
 
 <p align="center">
@@ -311,36 +311,36 @@ Ah, argumentum ad populum ;\]
 
 OK then:
 
-- First thing: not \"**_everyone_**\*. I understand that ML is a hot topic today (and is here to stay) but it does NOT mean everything revolves around and _nothing else matters_. There are other areas of science and data analysis too. Yeah, really.
+- First thing: not "**_everyone_**\*. I understand that ML is a hot topic today (and is here to stay) but it does NOT mean everything revolves around and _nothing else matters_. There are other areas of science and data analysis too. Yeah, really.
 
 -   The fact, that gazillions of people use logistic regression for
-    classification purposes doesn\'t remove it\'s regression nature.
-    It\'s just one application. It\'s like using a hammer for cooling
-    your forehead - you can call it a \"forehead cooler\", but it
-    doesn\'t change the fact it\'s still a hammer.
+    classification purposes doesn't remove it's regression nature.
+    It's just one application. It's like using a hammer for cooling
+    your forehead - you can call it a "forehead cooler", but it
+    doesn't change the fact it's still a hammer.
 
--   You should add \"\... in Machine Learning\". Outside ML, the
+-   You should add "\... in Machine Learning". Outside ML, the
     applications are much richer.
 
--   Believing that there\'s nothing beyond Machine Learning in this
-    world doesn\'t change\... the world. And the reality is that
+-   Believing that there's nothing beyond Machine Learning in this
+    world doesn't change\... the world. And the reality is that
     **experimental research** (including clinical research, physical and
     chemical experiments, sociological and psychological studies,
     quality assessments), where the regression tools are applied to
     binary (and n-ary) endpoints on daily basis, is still the essential
-    part of science. So no, it\'s not true that \"everyone uses logistic
-    regression for classification\". You should be more specific and
-    add: \"*Everyone in Machine Learning*\".
+    part of science. So no, it's not true that "everyone uses logistic
+    regression for classification". You should be more specific and
+    add: "*Everyone in Machine Learning*".
 
-So while I can understand someone saying that \"*in ML, logistic
-regression is a classification algorithm*\", I cannot agree that
-\"*logistic regression is not a regression*\". A single specific
+So while I can understand someone saying that "*in ML, logistic
+regression is a classification algorithm*", I cannot agree that
+"*logistic regression is not a regression*". A single specific
 application, employing also additional steps, and producing a different
-(categorized) output does not invalidate the \"core\" engine.
+(categorized) output does not invalidate the "core" engine.
 
 The fact that a tomato can be used to cook a soup (involving many steps)
-does not mean that \"tomato is not a fruit - it is a misnomer, because
-tomato is a soup ingredient\". It\'s that simple.
+does not mean that "tomato is not a fruit - it is a misnomer, because
+tomato is a soup ingredient". It's that simple.
 
 # Regression-related applications of the logistic regression (and its friends)
 
@@ -374,7 +374,7 @@ there is NO difference from any other regression!
     **Comparisons of trends** between groups.
 
 -   **Replicating the classic statistical tests**: of proportions,
-    odd-ratios and stochastic superiority (Wald\'s and Rao z test, chi2,
+    odd-ratios and stochastic superiority (Wald's and Rao z test, chi2,
     Cochran-Armitage, Breslow-Day, Cochran-Mantel-Haenszel, McNemar,
     Cochran Q, Friedman, Mann-Whitney (-Wilcoxon))
 
@@ -434,7 +434,7 @@ Logistic regression has many friends that were invented to address
 various problems related to regression. Let us enumerate them and
 briefly describe:
 
--   **Binary Logistic Regression -** that\'s our binomial regression
+-   **Binary Logistic Regression -** that's our binomial regression
     with logit link, a special case of the Generalized Linear Model,
     modelling the % of successes.
 
@@ -442,18 +442,18 @@ briefly describe:
     with a response consisting of multiple unordered classes (e.g.
     colours).
 
--   **Nested MLR** - will help us when the classes are \"organized\" in
+-   **Nested MLR** - will help us when the classes are "organized" in
     groups, related in a hierarchy - thus nested. Imagine that a person
     chooses a mean of transport between **air** {plane} and **road**
     {car, train, bus}. When the road transportation is chosen, then the
-    further decision is made only between the three alternatives. It\'s
+    further decision is made only between the three alternatives. It's
     similar to multi-level models, where the error terms may present
     some correlation within the same nest, whereas uncorrelated between
     nests. Thank you, **McFadden**, also for this one! [[Read more
     here]](https://cran.r-project.org/web/packages/nestedLogit/vignettes/nestedLogit.html)
     and [[here (Applied Microeconometrix with
     R)]](https://discdown.org/microeconometrics/index.html)
-    (or just \"google\" for more).
+    (or just "google" for more).
 
 -   **Ordinal LR** (aka Proportional Odds Model) - allows you to deal
     with 2+ ordered classes, {horrible \< poor \< average \< good \<
@@ -463,9 +463,9 @@ briefly describe:
     know, that the OLR is related with the *Mann-Whitney (-Wilcoxon)
     test*? Use it, if you need a flexible non-parametric test, that: a)
     handles multiple categorical variables, b) adjusts for numerical
-    covariates (like ANCOVA). Don\'t hesitate to use it with NUMERICAL
+    covariates (like ANCOVA). Don't hesitate to use it with NUMERICAL
     variables! Yes, you can always do this, the same way you employ
-    rank-based methods (e.g. *Conover\'s AN\[C\]OVA*). Read also the
+    rank-based methods (e.g. *Conover's AN\[C\]OVA*). Read also the
     articles by **Prof. Harrell**, namely: [[Resources for Ordinal
     Regression Models]](https://www.fharrell.com/post/rpo/),
     [[Equivalence of Wilcoxon Statistic and Proportional Odds
@@ -474,7 +474,7 @@ briefly describe:
     Model]](https://www.fharrell.com/post/wpo/), and more.
 
 -   **Generalized OLR** - aka Partial Proportional Odds Model is used
-    when the proportionality of odds doesn\'t hold. (PS: read
+    when the proportionality of odds doesn't hold. (PS: read
     [[Violation of Proportional Odds is Not
     Fatal]](https://www.fharrell.com/post/po/))
 
@@ -491,7 +491,7 @@ briefly describe:
 -   **Conditional Logistic Regression - helpful** when we deal with
     stratification and matching groups of data, e.g. in observational
     studies without randomization, to match subjects by some
-    characteristics and create homogenous \"baseline\". It can be used
+    characteristics and create homogenous "baseline". It can be used
     to reproduce the *Cochran-Mantel-Haenszel test* (via
     *clogit(\...strata)* in R)
 
@@ -504,7 +504,7 @@ briefly describe:
     clinical trials with binary endpoints. And no, we do NOT classify
     there anything ;\]
 
--   **Alternating Logistic Regression** - it\'s a quite rare (and
+-   **Alternating Logistic Regression** - it's a quite rare (and
     forgotten) model, suitable if we deal with correlated observations,
     e.g. when we analyse repeated or clustered data. I mentioned already
     two methods: the mixed-effect LR, and GEE LR. The Alternating LR is
@@ -523,8 +523,8 @@ briefly describe:
 # Literature
 
 I will populate this chapter with textual references later. For now,
-find the \"collage\" of covers. And believe, neither of these books will
-say that \"logistic regression is not a regression\" :)
+find the "collage" of covers. And believe, neither of these books will
+say that "logistic regression is not a regression" :)
 
 <p align="center">
 <img src="https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/c0fb2bf5-089a-4a2f-8a98-fb569c7a3589"/>
@@ -547,12 +547,12 @@ Other authors also prove it can be done properly:
 
 ## ad hoc comments from my readers
 
--   *Q: \"Adrian, but in their book, Hastie and Tibshirani put the
-    logistic regression in the »classification« chapter!\"*
+-   *Q: "Adrian, but in their book, Hastie and Tibshirani put the
+    logistic regression in the »classification« chapter!"*
 
-A: Of course they did! It\'s a book about machine learning, so this kind
+A: Of course they did! It's a book about machine learning, so this kind
 of *application* is of interest and highly expectable. **BUT they've
-never said it\'s not a regression model. ** They both wrote also a
+never said it's not a regression model. ** They both wrote also a
 series of articles on the application of the proportional hazard models
 and the logistic regression in biostatistical (they worked in the
 division of biostatistics) applications in the regression manner
@@ -564,11 +564,11 @@ effect) and call it a regression model.
 </p>
 
 Also in the book you mention, on page 121-122 + the following examples
-they say: \"*Logistic regression models are used mostly as a data
+they say: "*Logistic regression models are used mostly as a data
 analysis and inference tool, where the goal is to understand the role of
 the input variables in explaining the outcome. Typically many models are
 fit in a search for a parsimonious model involving a subset of the
-variables, possibly with some interactions terms.*\"
+variables, possibly with some interactions terms.*"
 
 -   *Q: You said that Prof. Hastie authored the glm() function in S. Any
     source?*
@@ -582,10 +582,10 @@ Here (just for instance):
 
 -   *Q: ChatGPT 3.5 says that logistic regression is not a regression!*
 
-*A:* **ChatGPT will repeat what was trained on**. Don\'t rely on it
+*A:* **ChatGPT will repeat what was trained on**. Don't rely on it
 strictly when you are learning a new topic, because what you will be
 told strongly depends on how you will ask. It was trained on mixed good
-and bad resources, so sometimes the *valid one* is \"allowed to speak\"
+and bad resources, so sometimes the *valid one* is "allowed to speak"
 but just a few questions later it may be messing again. This pertains to
 ANY kind of topic, not only in statistics. **DO ALWAYS verify the
 responses from any AI-based system if you are going to learn from it,

@@ -16,13 +16,15 @@ Namely, it can replicate the results of:
 
 Actually, the model-based approach to testing hypotheses is not anything new, and lots of other tests can be replicated with the general linear model via Ordinal Least Square (OLS) and Generalized Least Square (GLS) estimation, generalized linear models (GLM) via both Maximum-Likelihood estimation (MLE) and semi-parametric Generalized Estimating Equations (GEE). Let's add to this also the conditional approach via Mixed-Effect models (both general and generalized). And let's not forget about the Quantile Regression (with mixed effects), robust regression models, survival models (Cox, AFT, Andersen-Gill, frailty models) and dozens of others!
 
-All those models, followed by the Likelihood Ratio testing (LRT) or Wald's testing of model coefficients, especially combined with LS-means (EM-means) will give you incredibly flexible testing framework.
+All those models, followed by the _Likelihood Ratio_ (LR), _Rao (score)_, or _Wald's_ approach to testing of model coefficients, especially combined with the idea of _estimated marginal means_ (EM-means) will give you an incredibly flexible testing framework.
 
-This time we will look at the Logistic Regression, part of the Generalized Linear Model - the binomial regression with logit link. We will also employ certain extensions i generalizations to achieve concrete effects.
+This time we will look at the Logistic Regression, part of the Generalized Linear Model - the binomial regression with logit link. We will also employ certain extensions and generalizations to achieve concrete effects.
+
+![obraz](https://github.com/adrianolszewski/Logistic-regression-is-regression/assets/95669100/953ab6ff-1930-4a02-9f7b-8be2cb1b7d71)
 
 ---
 
-We will use 3 data sets (defined at the bottom of this file):
+We are going to use 3 data sets (defined at the bottom of this file):
 * unpaired 2-group data
 
 ``` r

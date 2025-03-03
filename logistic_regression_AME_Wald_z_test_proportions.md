@@ -170,7 +170,7 @@ where X is the design matrix with 2 columns ($β_0$ of ones and $β_1$ indicatin
 
 ``` math
 \begin{equation}
-=\left[\begin{matrix}1&A=0\\1&A=0\\\vdots&\vdots\\1&A=0\\1&B=1\\\vdots&\vdots\\1&B=1\\\end{matrix}\right]
+X=\left[\begin{matrix}1&A=0\\1&A=0\\\vdots&\vdots\\1&A=0\\1&B=1\\\vdots&\vdots\\1&B=1\\\end{matrix}\right]
 \hspace{2cm} (18)
 \end{equation}
 ```

@@ -146,8 +146,35 @@ Therefore,
 
 ``` math
 \begin{equation}
-\nabla g\left(\beta_0,\beta_1\right)=\left[\begin{matrix}\frac{\partial g}{\partial\beta_0}\\\frac{\partial g}{\partial\beta_1}\\\end{matrix}\right]=\left[\begin{matrix}P_B\left(1-P_B\right)-P_A\left(1-P_A\right)\ \\P_B\left(1-P_B\right)\\\end{matrix}\right]=\left[\begin{matrix}P_BQ_B-P_AQ_A\ \\P_BQ_B\\\end{matrix}\right]=\left[\begin{matrix}\frac{e^{\beta_0+\beta_1}}{\left(1+e^{\beta_0+\beta_1}\right)^2}\ \\\frac{e^{\beta_0}}{\left(1+e^{\beta_0}\right)^2}\\\end{matrix}\right]
-\hspace{2cm} (15)
+    \nabla g\left(\beta_0,\beta_1\right) =
+    \left[
+        \begin{matrix}
+            \frac{\partial g}{\partial\beta_0} \\
+            \frac{\partial g}{\partial\beta_1}
+        \end{matrix}
+    \right]
+    =
+    \left[
+        \begin{matrix}
+            P_B\left(1 - P_B\right) - P_A\left(1 - P_A\right) \\
+            P_B\left(1 - P_B\right)
+        \end{matrix}
+    \right]
+    =
+    \left[
+        \begin{matrix}
+            P_B Q_B - P_A Q_A \\
+            P_B Q_B
+        \end{matrix}
+    \right]
+    =
+    \left[
+        \begin{matrix}
+            \frac{e^{\beta_0+\beta_1}}{\left(1+e^{\beta_0+\beta_1}\right)^2} \\
+            \frac{e^{\beta_0}}{\left(1+e^{\beta_0}\right)^2}
+        \end{matrix}
+    \right]
+    \hspace{1.5cm} (15)
 \end{equation}
 ```
 Now, we need the variance-covariance matrix, i.e.

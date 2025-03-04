@@ -191,6 +191,7 @@ Let's look closer at the results:
 Excellent agreement!
 
 ## Wald's z test via AME (average marginal effect)
+/ How is this correct? Please read my explanation here: https://github.com/adrianolszewski/Logistic-regression-is-regression/blob/main/logistic_regression_AME_Wald_z_test_proportions.md /
 ``` r
 > marginaleffects::avg_slopes(lr_model)
 
@@ -208,7 +209,6 @@ Let's look closer at the results:
 | p-value   | 0.002307859 | 0.002307865 | agreement by 6 dec. digits 👍 |
 
 Perfect agreement!
-
 ---
 <a name="rao_2prop_z"></a>
 # Rao score z test for 2 proportions (pooled SE)

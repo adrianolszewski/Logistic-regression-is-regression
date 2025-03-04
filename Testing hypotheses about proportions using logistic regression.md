@@ -3,9 +3,9 @@ Despite the widespread and nonsensical claim, that "logistic regression is not a
 Let me show you how the logistic regression (with a few extensions) can be used to test hypotheses about fractions (%) of successes, repacling the classic "test for proportions".
 Namely, it can replicate the results of:
 
-1. [the Wald's (normal approximation) **z test for 2 proportions with non-pooled standard errors**](#wald_2prop_z) (common in clinical trials) via LS-means on the prediction scale or AME (average marginal effect)
+1. [the Wald's (normal approximation) **z test for 2 proportions with non-pooled standard errors**](#wald_2prop_z) (common in clinical trials). Testing is done  via EM-means (estimated-marginal means) on the probability scale or the AME (average marginal effect) over the binary predictor distinguishing the two compared groups.
 2. [the Rao's score (normal appr.) **z test for 2 proportions with pooled standard errors**](#rao_2prop_z) (just what the `prop.test()` does in R)
-3. the **z test for multiple (2+) proportions**
+3. the **chi2 test for multiple (2+) proportions**
 4. **ANOVA-like** (joint) test for multiple caterogical predictors (n-way ANOVA). Also (n-way) ANCOVA if you employ numerical covariates.
 5. [the **Cochran-Mantel-Haenszel (CMH) for stratified/matched data**](#cmh) via _conditional logistic regression_
 7. [the **Breslow-Day test for odds ratios**](#breslow-day) through Rao's ANOVA --> the interaction term

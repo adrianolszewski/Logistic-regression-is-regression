@@ -30,6 +30,8 @@ or equivalently, after applying the inverse-logit, i.e. sigmoid function (let’
 \hspace{2cm} (3)
 \end{equation}
 ```
+where $$Y_i$$​ are independent Bernoulli random variables with probabilities $$\hat{p_i}$$​.
+
 **(Average) Marginal Effect**
 
 Now, let’s introduce the marginal effect (ME) of a regression model. The ME of a given predictor variable X is the slope of the regression surface with respect to X, reflecting the rate at which Y changes at a given point with respect to X, while holding values of all other predictors constant. In other words, ME is an instantaneous rate of change, calculated as partial derivative of the regression equation with respect to X. For example, for an equation: Y = β0 + β1X1+ β2X2 + β3X1X2  corresponding ME(Y, X2) = ∂Y/ ∂X2 = β2 + β3X1

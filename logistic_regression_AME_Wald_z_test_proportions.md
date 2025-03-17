@@ -278,7 +278,7 @@ var\left(AME\right)=\frac{\left(P_BQ_B-P_AQ_A\right)^2}{{n_AP}_AQ_A}+\frac{\left
 \end{equation}
 ```
 
-Let's replace $P*Q$, the variance, with V to simplify (note: I occasionally use "×" to denote arithmetic multiplication to facilicate reading; A×B is just AB):
+Let's replace $P*Q$ with V to simplify (note: I occasionally use "×" to denote arithmetic multiplication to facilicate reading; A×B is just AB):
 
 ``` math
 \begin{equation}

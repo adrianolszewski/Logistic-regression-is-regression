@@ -16,7 +16,7 @@ To simplify calculations, I will show the equivalence of the nominator and denom
 
 **The equation of logistic regression**
 
-Let’s start from the equation of the logistic regression with a single categorical predictor:
+Let’s start from the equation of the logistic regression with a single binary predictor:
 ``` math
 \begin{equation}
 logit\left(E\left(Y\middle| X\right)=logit\left(\hat{p}(Y=1|X\right)\right)=\ln{\left(\frac{\hat{p}\left(Y=1\middle| X\right)}{1-\hat{p}\left(Y=1\middle| X\right)}\right)}=\beta_0+X_1\beta_1

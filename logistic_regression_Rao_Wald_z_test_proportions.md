@@ -319,11 +319,12 @@ Notice, that this is **exactly the matrix #24**.
 _The Rao Score_
 
 The Rao Score and Information Matrix under $H0: β_1=0$
-Recall:
+Recall the formula #18:
+
 ``` math
 \begin{equation}
 U\left(\beta\right)=\left[\begin{matrix}\sum_{i=1}^{n}\left(y_i-p_i\right)\\\sum_{i=1}^{n}{x_i\left(y_i-p_i\right)}\\\end{matrix}\right]
-\hspace{2cm} (33)
+\hspace{2cm} (18)
 \end{equation}
 ```
 Again, $n_A$ and $n_B$ depict the respective number of rows corresponding to group A and B, 
@@ -332,7 +333,7 @@ for group A: X=0 and for B: X =1 and $n=n_A+n_B$. Also, under $H_0$, $p_A=p_B=p$
 ``` math
 \begin{equation}
 U\left(\beta_0,\ \beta_1=0\right)=\left[\begin{matrix}\left(\sum_{i=1}^{n}y_i\right)-(n_{A\ }+n_B)\bullet p\\\left(\sum_{i:\ X_i=1} y_i\right){-\ n}_Bp\\\end{matrix}\right]
-\hspace{2cm} (34)
+\hspace{2cm} (33)
 \end{equation}
 ```
 
@@ -340,15 +341,15 @@ Here, $y_i$ is the response vector containing **1**s in respective group. Summin
 
 ``` math
 \begin{equation}
-\sum_{i=1}^{n}y_i=\sum_{i:\ X_i\in{0,\ 1}} y_i=n_Ap_A\ +\ n_Bp_B
-\hspace{2cm} (35)
+\sum_{i=1}^{n} y_i = \sum_{i:\ X_i\in\{0, 1\}} y_i = n_A p_A + n_B p_B \overset{H_0}{\Rightarrow} (n_A + n_B) \cdot p
+\hspace{2cm} (34)
 \end{equation}
 ```
-And finally:
+So, the first element of the vector becomes 0 out and finally:
 ``` math
 \begin{equation}
-U\left(\beta_0,\ \beta_1=0\right)=\left[\begin{matrix}n_Ap_A\ +\ n_Bp_B-(n_{A\ }+n_B)\bullet p\\n_B(p_B-p)\\\end{matrix}\right]
-\hspace{2cm} (36)
+U\left(\beta_0,\ \beta_1=0\right)=\left[\begin{matrix}0\\n_B(p_B-p)\\\end{matrix}\right]
+\hspace{2cm} (35)
 \end{equation}
 ```
 
@@ -358,7 +359,7 @@ By recalling **matrix #26** and remembering that under $H_0$, $p_A=p_B=p$ we obt
 ``` math
 \begin{equation}
 I\left(\beta_0,\ \beta_1=0\right)=\left[\begin{matrix}pq(n_A+n_B)&n_Bpq\\n_Bpq&n_Bpq\\\end{matrix}\right]
-\hspace{2cm} (37)
+\hspace{2cm} (36)
 \end{equation}
 ```
 Let’s also calculate $I^{-1}$
@@ -366,7 +367,7 @@ Let’s also calculate $I^{-1}$
 ``` math
 \begin{equation}
 \mathrm{\Sigma}={I\left(\beta_0,\ \beta_1=0\right)}^{-1}=\frac{1}{pq(n_A+n_B)\bullet n_Bpq-\left(n_Bpq\right)^2}\left[\begin{matrix}n_Bpq&-n_Bpq\\-n_Bpq&pq(n_A+n_B)\\\end{matrix}\right]
-\hspace{1cm} (38)
+\hspace{1cm} (37)
 \end{equation}
 ```
 After simplifying the denominator term:
@@ -374,7 +375,7 @@ After simplifying the denominator term:
 ``` math
 \begin{equation}
 pq(n_A+n_B)\bullet n_Bpq-\left(n_Bpq\right)^2=p^2q^2n_An_B\ +\ p^2q^2n_B^2-p^2q^2n_B^2\ =p^2q^2n_An_B
-\hspace{1cm} (39)
+\hspace{1cm} (38)
 \end{equation}
 ```
 we finally obtain:
@@ -382,7 +383,7 @@ we finally obtain:
 ``` math
 \begin{equation}
 \mathrm{\Sigma}(\beta_0,\ \beta_1=0)={I\left(\beta_0,\ \beta_1=0\right)}^{-1}=\frac{1}{p^2q^2n_An_B}\left[\begin{matrix}n_Bpq&-n_Bpq\\-n_Bpq&pq(n_A+n_B)\\\end{matrix}\right]=\left[\begin{matrix}\frac{1}{n_Apq}&-\frac{1}{n_Apq}\\-\frac{1}{n_Apq}&\frac{n_A+n_B}{n_An_Bpq}\\\end{matrix}\right]
-\hspace{1cm} (40)
+\hspace{1cm} (39)
 \end{equation}
 ```
 
@@ -393,63 +394,22 @@ The Rao score test (called also Lagrange multiplier test) under $H_0$ is defined
 ``` math
 \begin{equation}
 R={U(\beta_0,\ \beta_1=0)}^T\bullet {I(\beta_0,\ \beta_1=0)}^{-1}\bullet U(\beta_0,\ \beta_1=0)
-\hspace{2cm} (41)
+\hspace{2cm} (40)
 \end{equation}
 ```
-Let’s do the multiplication. First the $A=I^{-1}U$ part:
-
-``` math
-\begin{equation}
-A=\mathrm{\Sigma}(\beta_0,\ \beta_1=0)\bullet U(\beta_0,\ \beta_1=0)=\left[\begin{matrix}\frac{1}{n_Apq}&-\frac{1}{n_Apq}\\-\frac{1}{n_Apq}&\frac{n_A+n_B}{pqn_An_B}\\\end{matrix}\right]\left[\begin{matrix}n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet p\\n_B\left(p_B-p\right)\\\end{matrix}\right]
-\hspace{1cm} (42)
-\end{equation}
-```
-Partial results:
+But since the first element of U is 0, this reduces to just scalar operation: $U^2/I = U^2Σ$:
 
 ``` math
 \begin{equation}
 \begin{aligned}
-&\frac{1}{n_Apq}\bullet\left(n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet p\right)\ +\left(-\frac{1}{n_Apq}\right)\bullet n_B\left(p_B-p\right) \\
-&=\frac{\left(n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet p\right)-n_B\left(p_B-p\right)}{n_Apq} \\
-&=\frac{n_Ap_A+n_Bp_B-n_{A\ }p-n_Bp-n_Bp_B\ +\ n_Bp}{n_Apq} \\
-&=\frac{n_Ap_A-n_{A\ }p}{n_Apq}=\frac{n_A\left(p_A-p\right)}{n_Apq}=\frac{p_A-p}{pq}
-\end{aligned}
-\hspace{2cm} (43)
-\end{equation}
-```
-and
-``` math
-\begin{equation}
-\begin{aligned}
-&\left(-\frac{1}{n_Apq}\right)\bullet\left(n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet p\right)\ +\frac{n_A+n_B}{pqn_An_B}{\bullet n}_B\left(p_B-p\right) \\
-&=-\frac{n_Ap_A+n_Bp_B-n_Ap+n_Bp}{n_Apq}+\frac{\left(n_A+n_B\right)\left(p_B-p\right)}{pqn_A} \\
-&=\frac{-n_Ap_A+n_Ap_B}{n_Apq}=\frac{p_B-p_A}{pq} \\
-\end{aligned}
-\hspace{2cm} (44)
-\end{equation}
-```
-
-Therefore:
-``` math
-\begin{equation}
-A=\mathrm{\Sigma}(\beta_0,\ \beta_1=0)\bullet U(\beta_0,\ \beta_1=0)=\ \left[\begin{matrix}\frac{p_A-p}{pq}\\\frac{p_B-p_A}{pq}\\\end{matrix}\right]
-\hspace{2cm} (45)
-\end{equation}
-```
-And finally, $R=U^TA$:
-``` math
-\begin{equation}
-\begin{aligned}
-R&={U\left(\beta_0,\beta_1=0\right)}^TA=\left[\begin{matrix}n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet p\\n_B\left(p_B-p\right)\\\end{matrix}\right]^T\ \left[\begin{matrix}\frac{p_A-p}{pq}\\\frac{p_B-p_A}{pq}\\\end{matrix}\right] \\
-&=\frac{\left(n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet p\right)\left(p_A-p\right)}{pq}+\frac{n_B\left(p_B-p\right)\left(p_B-p_A\right)}{pq} \\
-&=\frac{\left(n_Ap_A+n_Bp_B-\left(n_{A\ }+n_B\right)\bullet\frac{n_Ap_A+n_Bp_B}{n_A+n_B}\right)\left(p_A-\frac{n_Ap_A+n_Bp_B}{n_A+n_B}\right)}{pq}+\frac{n_B\left(p_B-p\right)\left(p_B-p_A\right)}{pq}\\
-&=\frac{\left(n_Ap_A+n_Bp_B-n_Ap_A-n_Bp_B\right)\left(p_A-\frac{n_Ap_A+n_Bp_B}{n_A+n_B}\right)}{pq}+\frac{n_B\left(p_B-p\right)\left(p_B-p_A\right)}{pq} \\
-&=0+\frac{n_B\left(p_B-\frac{n_Ap_A+n_Bp_B}{n_A+n_B}\right)\left(p_B-p_A\right)}{pq} \\
-&=\frac{n_B\left(\frac{n_A{(p}_B-p_A)}{n_A+n_B}\right)\left(p_B-p_A\right)}{pq}=\frac{\frac{n_Bn_A{{(p}_B-p_A)}^2}{n_A+n_B}}{pq} \\
-&=\frac{n_Bn_A{{(p}_B-p_A)}^2}{pq\left(n_A+n_B\right)}=\frac{{{(p}_B-p_A)}^2}{pq\frac{n_A+n_B}{n_Bn_A}}=\frac{{{(p}_B-p_A)}^2}{pq\left(\frac{1}{n_B}+\frac{1}{n_A}\right)} \\
+R&=U\left(\beta_0,\beta_1=0\right)\mathrm{\Sigma}\left(\beta_0,\beta_1=0\right)= \\
+&=\left[n_B\left(p_B-p\right)\right]^2\bullet\frac{n_A+n_B}{pqn_An_B}=\frac{\left[n_B\left(p_B-p\right)\right]^2}{pq\frac{n_An_B}{n_A+n_B}} \\
+&=\frac{n_B^2\left(p_B-\frac{n_Ap_A+n_Bp_B}{n_A+n_B}\right)^2}{pq\frac{n_An_B}{n_A+n_B}}=\frac{{n_B^2\left(\frac{p_Bn_A+p_Bn_B-n_Ap_A-n_Bp_B}{n_A+n_B}\right)}^2}{pq\frac{n_An_B}{n_A+n_B}} \\
+&=\frac{\frac{n_B^2\left(p_Bn_A-n_Ap_A\right)^2}{\left(n_A+n_B\right)^2}}{pq\frac{n_An_B}{n_A+n_B}}=\frac{\frac{n_B^2n_A^2\left(p_B-p_A\right)^2}{\left(n_A+n_B\right)^2}}{pq\frac{n_An_B}{n_A+n_B}} \\
+&=\frac{\left(p_B-p_A\right)^2}{pq\frac{n_An_B}{n_A+n_B}\frac{\left(n_A+n_B\right)^2}{n_B^2n_A^2}}=\frac{\left(p_B-p_A\right)^2}{pq\frac{n_A+n_B}{n_An_B}}=\frac{{{(p}_B-p_A)}^2}{pq\left(\frac{1}{n_B}+\frac{1}{n_A}\right)} \\
 &=\frac{{{(p}_B-p_A)}^2}{p\left(1-p\right)\left(\frac{1}{n_A}+\frac{1}{n_B}\right)}=z^2\blacksquare
 \end{aligned}
-\hspace{2cm} (46)
+\hspace{2cm} (41)
 \end{equation}
 ```
 

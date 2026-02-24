@@ -1,18 +1,29 @@
-# Proving the equivalence between the 2-sample Wald’s z-statistic for comparing proportions with pooled variances and the Pearson’s χ2 (independence) test for a 2×2 contingency table.
+# Proving the equivalence between the 2-sample z-statistic for comparing proportions with pooled variances (Rao score test) and the Pearson’s χ2 (independence) test for a 2×2 contingency table.
 #### Adrian Olszewski, 27.03.2025
 
-The Wald’s z-statistic for difference in 2 proportions with unpooled variances is of the following form:
+---
+⚠️**Disclaimer:**
+1. What you will read below  demonstrates **the algebraic equivalence between selected classical hypothesis tests and their model-based analogues** under common large-sample assumptions. My goal was to show how the formulas transition from one framework to another. The derivations focus on analytic equivalence of test statistics and **do not provide a fully rigorous proof** of asymptotic distributions or verify all regularity conditions required in formal statistical theory. As such, this note should be viewed as a **proof of concept** and kind of a _"conceptual bridge"_ rather than a complete theoretical course. In particular: distributional assumptions are stated informally rather than derived formally, asymptotic arguments (e.g., convergence to χ² distributions) are not proven (it is not a textbook!), conditions required for likelihood-based theory are not verified.
+   
+2. You might notice the code uses the name "Wald". It's intentional. In the GLM family, Wald, Rao (Score), and Likelihood Ratio tests only converge asymptotically. Strictly speaking, the pooled z-statistic derived here is a Rao Score test, **not a Wald test**. However, because the term "Wald test" is frequently (and incorrectly) used as an umbrella term for any z-ratio in software and textbooks, and I saw many times that people search for it in this way. So I’ve retained the name for consistency with common practice. The critical takeaway is the use of pooled standard errors, which aligns this calculation with Rao’s approach rather than the unpooled Wald approach.
+
+**So, if you prepare for an exam, use it with care.**
+
+---
+
+We will assume independent binomial sampling and no small-sample corrections.
+The z-statistic for difference in 2 proportions (Rao) with pooled variances is of the following form:
 
 ``` math
 \begin{equation}
-z=\ \frac{\widehat{p_B}-\widehat{p_A}}{\sqrt{p\left(1-p\right)\left(\frac{1}{n_A}+\frac{1}{n_B}\right)}};\ z~N(0,\ 1)
+z=\ \frac{\widehat{p_B}-\widehat{p_A}}{\sqrt{p\left(1-p\right)\left(\frac{1}{n_A}+\frac{1}{n_B}\right)}};\ z \sim N(0,\ 1)
 \hspace{2cm} (1)
 \end{equation}
 ```
 Where $\widehat{p_A}\$ stands for the estimated probability (sample proportion, %) in the 1st group, 
 $\widehat{p_B}$ is the estimated probability in the 2nd group, $n_A$ and $n_B$ denote respective group sizes, and p is the pooled probability $p=\frac{x_A+x_B}{n_A+n_B}=\frac{p_An_A+p_Bn_B}{n_A+n_B}$.
 
-Traditionally the Wald’s statistic is expressed in the squared form, becoming: $z^2=\chi_{df=1}^2$.
+Traditionally the z statistic is expressed in the squared form, becoming: $z^2=\chi_{df=1}^2$.
 Both forms yield the same p-value. For convenience I will show that this  $\chi_{df=1}^2$ statistic is 1:1 equivalent to the $χ^2$ (independence) test for a 2×2 contingency table.
 
 Let’s define the form of the 2×2 contingency table with the observed (O) counts:
@@ -84,10 +95,11 @@ X^2&=\frac{\left(n_Ap_A-n_Ap\right)^2}{n_Ap}+\frac{\left(n_A\left(1-p_A\right)-n
 \hspace{2cm} (5b)
 \end{equation}
 ```
-This way I have proven that the z2 statistic is equivalent to the Pearson’s χ2 statistic for 2×2 table.
+This way I have shown that the z2 statistic is equivalent to the Pearson’s χ2 statistic for a 2×2 table.
 
 -----
 By the way, it is worth noticing, that in the χ2 test, the expected frequencies (E) in each column are based on the pooled proportion [p] which is just the weighted average proportion across both groups. 
+
 So, in other words, this test evaluates how much each group’s proportion $p_A$ and $p_B$ deviates from this overall average (p). And this effectively comparing the two groups directly, which is what the z-test actually does.
 
 -----
@@ -123,3 +135,4 @@ X-squared = 6.2859, df = 1, p-value = 0.01217
 ```
 
 ![obraz](https://github.com/user-attachments/assets/96158adb-97c5-4299-98f2-16a132760912)
+

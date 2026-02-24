@@ -172,13 +172,15 @@ Therefore,
     =
     \left[
         \begin{matrix}
-            \frac{e^{\beta_0+\beta_1}}{\left(1+e^{\beta_0+\beta_1}\right)^2} \\
-            \frac{e^{\beta_0}}{\left(1+e^{\beta_0}\right)^2}
+            \frac{e^{\beta_0+\beta_1}}{\left(1+e^{\beta_0+\beta_1}\right)^2} - \frac{e^{\beta_0}}{\left(1+e^{\beta_0}\right)^2} \\
+            \frac{e^{\beta_0+\beta_1}}{\left(1+e^{\beta_0+\beta_1}\right)^2}
         \end{matrix}
     \right]
     \hspace{1.5cm} (15)
 \end{equation}
 ```
+/ ... honestly, I prefer the P_i and Q_i over these e^{...}, so let's stay with Pi, Qi. /
+
 Now, we need the variance-covariance matrix, i.e.
 ``` math
 \begin{equation}
@@ -351,10 +353,9 @@ wald_z_test_non_pooled <- function(x1, n1, x2, n2, conf.level=0.95) {
     return(data.frame(diff=p1-p2,
                       z = z, chi2 = z^2,
                       se = se_diff, 
-                      p.value = p,
+                      p.value = p, p.value_1 =p/2,
                       LCI = (p1-p2) - hCI,
                       HCI = (p1-p2) + hCI,
                       row.names = NULL))
 }
 ```
-
